@@ -8,7 +8,6 @@ import Head from '../../../layouts/head.astro';
 import Footer from '../../../layouts/footer.astro';
 
 import { sanityClient } from "../../../lib/sanity";
-import { any } from 'astro:schema';
 
 
 const collections = await sanityClient.fetch(`
@@ -43,7 +42,7 @@ return `${month} ${day}${ordinal}, ${year}`;
   canonical="https://www.tstfie.ch/designs/25-26"
 />
 <body>
-  <container class="padding">
+  <div class="padding">
     <Header>
         <a href="/" class="navigation">Home</a>
         <a onclick="history.back()" class="navigation">Back</a>
@@ -71,6 +70,6 @@ return `${month} ${day}${ordinal}, ${year}`;
       </div>
     </section>
     <Footer/>
-  </container>
+  </div>
 </body>
 </html>

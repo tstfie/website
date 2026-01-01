@@ -1,13 +1,11 @@
 ---
-import type { SanityDocument } from "@sanity/client";
-import PortableText from "../../components/PortableText.astro";
 import { sanityClient } from "../../lib/sanity";
 import { urlForImage } from "../../lib/url-for-image";;
 
 import Header from '../../layouts/header.astro';
 import Head from '../../layouts/head.astro';
+import Footer from '../../layouts/footer.astro'
 
-import { websiteName } from '../../lib.js';
 import type { Image } from "sanity";
 
 // ------------------------------
@@ -71,6 +69,7 @@ function formatDate(dateString: string) {
 		))}
 	</div>
     </section>
+    <Footer/>
   </div>
 </body>
 </html>

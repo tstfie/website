@@ -1,13 +1,10 @@
 ---
-import type { SanityDocument } from "@sanity/client";
-import PortableText from "../../components/PortableText.astro";
 import { sanityClient } from "../../lib/sanity";
 import { urlForImage } from "../../lib/url-for-image";;
 
 import Header from '../../layouts/header.astro';
 import Head from '../../layouts/head.astro';
-
-import { websiteName } from '../../lib.js';
+import Footer from '../../layouts/footer.astro'
 
 // ------------------------------
 // 1️⃣ Define static paths
@@ -165,6 +162,7 @@ const pageTitle = project.title
         </div>
       </section>
     </section>
+    <Footer/>
   </div>
 
 <script is:inline>
