@@ -1,0 +1,36 @@
+---
+import '../styles/global.css';
+import '../styles/base.css';
+import '../styles/normalise.css';
+
+import Head from '../layouts/head.astro';
+---
+<html>
+<Head
+  title="Not Found",
+  description="The requested page could not be found.",
+  canonical="https://www.tstfie.ch/404"
+/>
+<body>
+  <div class="w-layout-blockcontainer centered-element-wrap w-container">
+    <article class="w-layout-blockcontainer w-container">
+      <section>
+        <section>
+          <h1 class="h1">404</h1>
+        </section>
+        <main>
+          <p>Nothing has been placed at this location.<br><span class="asterisk">Review the URL or retrace starting from index</span></p>
+          <nav class="interaction-wrapper">
+            <section class="paragraph">
+              <a href="#" class="link">latest project</a>
+            </section>
+            <section class="paragraph">
+              <a href="/" class="link">home</a>
+            </section>
+          </nav>
+        </main>
+      </section>
+    </article>
+  </div>
+</body>
+</html>

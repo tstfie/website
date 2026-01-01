@@ -1,0 +1,111 @@
+---
+import type { SanityDocument } from "@sanity/client";
+import PortableText from "../components/PortableText.astro";
+import { sanityClient } from "../lib/sanity";
+import { urlForImage } from "../lib/url-for-image";;
+
+import Header from '../layouts/header.astro';
+import Head from '../layouts/head.astro';
+import Footer from '../layouts/footer.astro';
+
+import type { Image } from "sanity";
+
+// ------------------------------
+// Fetch page data
+// ------------------------------
+
+const entry = await sanityClient.fetch<{
+  releaseDate: string;
+  title: string;
+  heading: string;
+  paragraph: string;
+  image: Image;
+}[]>(`
+  *[_type == "audit"] | order(releaseDate desc) {
+    releaseDate,
+    title,
+    heading,
+    paragraph,
+    image
+  }
+`);
+
+// ------------------------------
+// Optional: format release date
+// ------------------------------
+function formatDate(dateString: string) {
+  const date = new Date(dateString);
+  const day = date.getDate();
+  const month = date.toLocaleString("en-GB", { month: "long" });
+  const year = date.getFullYear();
+
+  let ordinal = "th";
+  if (day % 10 === 1 && day !== 11) ordinal = "st";
+  else if (day % 10 === 2 && day !== 12) ordinal = "nd";
+  else if (day % 10 === 3 && day !== 13) ordinal = "rd";
+
+  return `${month} ${day}${ordinal}, ${year}`;
+}
+---
+
+<html lang ="en">
+<Head
+  title="tstfie"
+  description="Niklay Wiborny, for tstfie."
+  canonical="https://www.tstfie.ch/"
+/>
+<body>
+  <container class="padding">
+	{/*-------- Header component --------*/}
+	<Header>
+		<a href="/about" class="navigation">Info</a>
+		<a href="#projects" class="navigation">View Projects</a>
+	</Header>
+	{/*-------- Main content --------*/}
+    <section class="window">
+	{/*---- Audit log ----*/}
+      <div class="audit-log" id="projects">
+        {entry.map((entry) => (
+          <article class="audit-log-entry" data-open="false">
+            <header class="log-entry-preview">
+              <p class="meta number">{entry.releaseDate}</p>
+              <h3><span class="link">{entry.title}</span></h3>
+            </header>
+            <section class="log-entry-content">
+              <p><span class="h4">{entry.heading}</span><br/>{entry.paragraph}</p>
+              <img src={urlForImage(entry.image).width(1200).url()} class="project-cover audit">
+            </section>
+          </article>
+        ))}
+      </div>
+    </section>
+	{/*-------- Footer component --------*/}
+	<Footer/>
+  </container>
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    const entries = document.querySelectorAll('.audit-log-entry');
+
+    entries.forEach(entry => {
+      entry.addEventListener('click', (e) => {
+        // If entry is already open, do nothing
+        if (entry.dataset.open === 'true') return;
+
+        // Close all other entries
+        entries.forEach(e => e.dataset.open = 'false');
+
+        // Open this one
+        entry.dataset.open = 'true';
+      });
+    });
+
+    // Clicking outside closes all entries
+    document.addEventListener('click', (e) => {
+      if (![...entries].some(entry => entry.contains(e.target))) {
+        entries.forEach(entry => entry.dataset.open = 'false');
+      }
+    });
+  });
+</script>
+</body>
+</html>

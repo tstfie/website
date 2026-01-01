@@ -1,0 +1,130 @@
+---
+import type { SanityDocument } from "@sanity/client";
+import PortableText from "../../../components/PortableText.astro";
+import { sanityClient } from "../../../lib/sanity";
+import { urlForImage } from "../../../lib/url-for-image";;
+
+import Header from '../../../layouts/header.astro';
+import Head from '../../../layouts/head.astro';
+
+import { websiteName } from '../../../lib.js';
+
+// ------------------------------
+// 1️⃣ Define static paths
+// ------------------------------
+export async function getStaticPaths() {
+  const slugs: { slug: string }[] = await sanityClient.fetch(`
+    *[_type == "work" && type == "Collection"]{
+      "slug": slug.current
+    }
+  `);
+
+  return slugs.map(({ slug }) => ({
+    params: { slug },
+  }));
+}
+
+// ------------------------------
+// 2️⃣ Fetch page data
+// ------------------------------
+const { slug } = Astro.params;
+
+const collection = await sanityClient.fetch<{
+  title: string;
+  type: string;
+  slug?: { current: string };
+  releaseDate: string;
+  tracklist: {
+    title: string;
+    duration: string;
+    order: number;
+    artists: { name: string }[];
+    designImage: any;
+  }[];
+} | null>(`
+  *[_type == "work" && slug.current == $slug && releaseDate >= "2024-06-01" && releaseDate <= "2025-05-31"][0]{
+    type,
+    title,
+    slug,
+    releaseDate,
+    tracklist[]->{
+      title,
+      duration,
+      order,
+      artists[]->{
+        name
+      },
+      designImage
+    }
+  }
+`, { slug });
+
+if (!collection) {
+  throw new Error(`Collection not found for slug: ${slug}`);
+  
+}
+// ------------------------------
+// 3️⃣ Optional: format release date
+// ------------------------------
+function formatDate(dateString: string) {
+  const date = new Date(dateString);
+  const day = date.getDate();
+  const month = date.toLocaleString("en-GB", { month: "long" });
+  const year = date.getFullYear();
+
+  let ordinal = "th";
+  if (day % 10 === 1 && day !== 11) ordinal = "st";
+  else if (day % 10 === 2 && day !== 12) ordinal = "nd";
+  else if (day % 10 === 3 && day !== 13) ordinal = "rd";
+
+  return `${month} ${day}${ordinal}, ${year}`;
+}
+
+const pageTitle = collection.title
+---
+<html>
+<Head
+  title={`${pageTitle}`}
+  description={`Collection by Niklay — ${pageTitle}`}
+  canonical={`https://www.tstfie.ch/designs/24-25/${collection.slug?.current ?? ""}`}
+/>
+<body>
+  <div class="padding">
+    <Header>
+        <a href="/" class="navigation">Home</a>
+        <a href="#top" class="navigation">Top</a>
+    </Header>
+    <article class="w-layout-blockcontainer collection w-container">
+      <header class="collection-header">
+        <div>
+          <p class="meta">24-25</p>
+          <h1>{collection.title}</h1>
+        </div>
+        <section>
+          <div class="meta">{formatDate(collection.releaseDate)}</div>
+        </section>
+      </header>
+      <div class="hflex">
+        <section class="collection-scroll">
+            {collection.tracklist?.map((track) => (
+                <section class="design-wrapper">
+                    <div class="title">{track.title}</div>
+                    <img src={urlForImage(track.designImage).width(1200).url()} class="sneaker-design" sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 939.984375px"/>
+                </section>
+            ))}
+        </section>
+        <div class="collection-tracklist">
+            {collection.tracklist?.map((track) => (
+                <h3>{track.title}<br/></h3>
+            ))}
+        </div>
+      </div>
+      <section class="section">
+        <div class="meta">{formatDate(collection.releaseDate)}</div>
+        <div class="meta">{collection.type} by Niklay</div>
+          <div class="meta">@{new Date(collection.releaseDate).getFullYear()} Niklay Wiborny, for tstfie</div>
+      </section>
+    </article>
+  </div>
+</body>
+</html>

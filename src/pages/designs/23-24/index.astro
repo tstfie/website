@@ -1,0 +1,58 @@
+---
+import '../../../styles/normalise.css';
+import '../../../styles/base.css';
+import '../../../styles/global.css';
+
+import Header from '../../../layouts/header.astro';
+import Head from '../../../layouts/head.astro';
+import Footer from '../../../layouts/footer.astro';
+
+import { sanityClient } from "../../../lib/sanity";
+import { any } from 'astro:schema';
+
+
+const collections = await sanityClient.fetch(`
+  *[_type == "work" && type == "Collection" && releaseDate >= "2023-06-01" && releaseDate <= "2024-05-31"]
+  | order(releaseDate desc) {
+    title,
+    releaseDate,
+    slug,
+    length
+  }
+`);
+
+function formatDate(dateString: string) {
+  const date = new Date(dateString);
+  const day = date.getDate();
+  const month = date.toLocaleString("en-GB", { month: "long" });
+  const year = date.getFullYear();
+
+  // get ordinal
+  let ordinal = "th";
+  if (day % 10 === 1 && day !== 11) ordinal = "st";
+  else if (day % 10 === 2 && day !== 12) ordinal = "nd";
+  else if (day % 10 === 3 && day !== 13) ordinal = "rd";
+
+return `${month} ${day}${ordinal}, ${year}`;
+}
+---
+<html>
+<Head
+  title="tstfie | 23-24"
+  description="Collections by Niklay"
+  canonical="https://www.tstfie.ch/designs/23-24"
+/>
+<body style="overflow:hidden">
+  <div class="padding">
+    <Header>
+        <a href="/" class="navigation">Home</a>
+        <a onclick="history.back()" class="navigation">Back</a>
+    </Header>
+    <main class="vflex centered">
+        {collections.map((collection: { slug: { current: any; }; title: unknown; releaseDate: string; length: unknown; }) => (
+            <h3><a href={`/designs/23-24/${collection.slug.current}/`}>{collection.title}</a></h3>
+        ))}
+    </main>
+  </div>
+</body>
+</html>

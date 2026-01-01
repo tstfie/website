@@ -1,0 +1,31 @@
+{
+  "name": "astro",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/react": "^4.4.2",
+    "@astrojs/vercel": "^9.0.2",
+    "@portabletext/types": "^4.0.0",
+    "@sanity/astro": "^3.2.11",
+    "@sanity/client": "^7.13.2",
+    "@sanity/image-url": "^2.0.2",
+    "@sanity/structure": "^2.36.2",
+    "@sanity/vision": "^5.1.0",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
+    "astro": "^5.16.6",
+    "astro-portabletext": "^0.12.0",
+    "groq": "^5.1.0",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
+    "react-is": "^19.2.3",
+    "sanity": "^5.1.0",
+    "styled-components": "^6.1.19"
+  }
+}

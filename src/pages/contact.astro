@@ -1,0 +1,68 @@
+---
+import '../styles/global.css';
+import '../styles/normalise.css';
+
+import Header from '../layouts/header.astro';
+import Head from '../layouts/head.astro';
+import Footer from '../layouts/footer.astro';
+---
+
+<html lang="en">
+<Head
+    title="tstfie | Contact"
+    description="Contact tstfie."
+    canonical="https://www.tstfie.ch/contact"
+/>
+<body>
+  <container class="padding">
+    <Header>
+      <a href="/#projects" class="navigation">View Projects</a>
+      <a onclick="history.back()" class="navigation">Back</a>
+    </Header>
+    <section class="window contact">
+      <h1>Contact</h1>
+      <p>Niklay Wiborny, for tstfie.</p>
+      <section class="contact-section">
+        <h3><a href="mailto:info@tstfie.ch">info@tstfie.ch</a></h3>
+        <div class="form-block w-form">
+          <form id="email-form" name="email-form" data-name="Email Form" method="post" class="fields-wrapper form">
+            <div class="div-block">
+              <div>
+                <label for="first-name"><h5>first name<span class="asterisk">*</span></h5></label>
+                <input class="input-field" maxlength="256" name="First-Name" data-name="First Name" type="text" id="first-name" required="">
+              </div>
+              <div>
+                <label for="last-name"><h5>last name</h5></label>
+                <input class="input-field" maxlength="256" name="Last-Name" data-name="Last Name" id="last-name" type="text">
+              </div>
+            </div>
+            <div>
+              <label for="email"><h5>email address<span class="asterisk">*</span></h5></label>
+              <input class="input-field email" maxlength="256" name="email" data-name="Email" type="email" id="email" required="">
+            </div>
+            <div>
+              <label for="message"><h5>message<span class="asterisk">*</span></h5></label>
+              <textarea class="input-field plain" id="message" name="Message" required></textarea>
+            </div>
+            <div class="interaction-wrapper">
+              <button type="submit" class="cta"><h5>Submit</h5></button>
+            </div>
+          </form>
+        </div>
+      </section>
+      <section class="contact-section">
+        <h3><a href="#">socials</a></h3>
+        <div class="fields-wrapper socials">
+          <h5>
+            <a href="https://instagram.com/tstfie" class="link">instagram.com</a>
+          </h5>
+          <h5>
+            <a href="https://twitter.com/phrygianchord" class="link">x.com</a>
+          </h5>
+        </div>
+      </section>
+    </section>
+    <Footer/>
+  </container>
+</body>
+</html>
