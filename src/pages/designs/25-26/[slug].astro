@@ -14,7 +14,7 @@ import Footer from '../../../layouts/footer.astro'
 // ------------------------------
 export async function getStaticPaths() {
   const slugs: { slug: string }[] = await sanityClient.fetch(`
-    *[_type == "work" && type == "Collection"]{
+    *[_type == "work" && type == "Collection" && releaseDate >= "2025-06-01" && releaseDate <= "2026-05-31"]{
       "slug": slug.current
     }
   `);
