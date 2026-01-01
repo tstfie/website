@@ -2,25 +2,24 @@
 export const prerender = true;
 
 import { sanityClient } from "../../lib/sanity";
-import { urlForImage } from "../../lib/url-for-image";
+import { urlForImage } from "../../lib/url-for-image";;
 
 import Header from '../../layouts/header.astro';
 import Head from '../../layouts/head.astro';
-import Footer from '../../layouts/footer.astro';
+import Footer from '../../layouts/footer.astro'
 
 // ------------------------------
 // 1️⃣ Define static paths
 // ------------------------------
 export async function getStaticPaths() {
-  // Fetch all work slugs
   const slugs: { slug: string }[] = await sanityClient.fetch(`
-    *[_type == "work" && type]{
+    *[_type == "work" && type != "Collection"]{
       "slug": slug.current
     }
   `);
 
   return slugs.map(({ slug }) => ({
-    params: { slug },  // Generate paths for each slug
+    params: { slug },
   }));
 }
 
@@ -29,7 +28,6 @@ export async function getStaticPaths() {
 // ------------------------------
 const { slug } = Astro.params;
 
-// Fetch project data based on the slug
 const project = await sanityClient.fetch<{
   title: string;
   type: string;
@@ -104,8 +102,9 @@ function formatDate(dateString: string) {
   return `${month} ${day}${ordinal}, ${year}`;
 }
 
-const pageTitle = project.title; // Title for the page
+const pageTitle = project.title
 ---
+
 <html lang = en>
 <Head
   title={project.title}
