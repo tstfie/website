@@ -122,10 +122,12 @@ const pageTitle = project.title
       <a onclick="history.back()" class="navigation">Back</a>
     </Header>
     <section class="window music">
-      <main class="section">
-        <img src={urlForImage(project.cover).width(1200).url()} loading="lazy" alt="" class="project-cover">
-        <h1>{project.title}</h1>
-        <p class="meta">{formatDate(project.releaseDate)} — {project.length}</p>
+      <main>
+        <div class="project-header">
+          <img src={urlForImage(project.cover).width(1200).url()} loading="lazy" alt="" class="project-cover">
+          <h1>{project.title}</h1>
+          <p class="meta">{formatDate(project.releaseDate)} — {project.length}</p>
+        </div>
       </main>
       <section class="section">
         <div class="interaction-wrapper h4 stream-group">

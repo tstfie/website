@@ -231,6 +231,17 @@ body {
   color: #da0;
 }
 
+.project-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem; /* YOU control spacing */
+}
+
+.project-header h1,
+.project-header p {
+  margin: 0;
+}
+
 .project-cover {
   border-radius: 4px;
   width: 400px;
