@@ -95,19 +95,18 @@ em {
    ========================================================= */
 
 nav {
-  grid-column-gap: 4px;
-  grid-row-gap: 4px;
-  text-underline-offset: 2px;
+  display: flex;
   flex-flow: column;
   justify-content: flex-end;
   align-items: flex-end;
-  text-decoration: underline;
-  text-decoration-thickness: 2.2px;
-  display: flex;
+  grid-column-gap: 4px;
+  grid-row-gap: 4px;
+  text-underline-offset: 2px;
   position: fixed;
 }
 
 footer{
+  margin-left: auto;
   grid-column-gap: 8px;
   grid-row-gap: 8px;
   flex-flow: column;
