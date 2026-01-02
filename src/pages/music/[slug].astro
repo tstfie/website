@@ -1,6 +1,4 @@
 ---
-export const prerender = true;
-
 import { sanityClient } from "../../lib/sanity";
 import { urlForImage } from "../../lib/url-for-image";;
 
@@ -36,9 +34,11 @@ const project = await sanityClient.fetch<{
   length: string;
   links: {
     streaming: {
-      variable: string;
-      url: URL;
-      label: string;
+      service: {
+        index: string;
+        url: URL;
+        label: string;
+      }
     };
     download: URL;
   }
@@ -49,7 +49,9 @@ const project = await sanityClient.fetch<{
       title: string;
       duration: string;
       order: number;
-      artists: { name: string }[];
+      artists: {
+        name: string
+      }[];
     }[];
   }[];
 } | null>(`
