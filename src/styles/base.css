@@ -97,8 +97,8 @@ em {
 nav {
   display: flex;
   flex-flow: column;
-  justify-content: flex-end;
-  align-items: flex-start;
+  justify-content: flex-start;
+  align-items: flex-end;
   grid-column-gap: 4px;
   grid-row-gap: 4px;
   text-underline-offset: 2px;
@@ -110,8 +110,8 @@ footer{
   grid-column-gap: 8px;
   grid-row-gap: 8px;
   flex-flow: column;
-  justify-content: flex-end;
-  align-items: flex-start;
+  justify-content: flex-start;
+  align-items: flex-end;
   display: flex;
 }
 
