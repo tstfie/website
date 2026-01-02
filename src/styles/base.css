@@ -110,14 +110,13 @@ nav {
   position: fixed;
 }
 
-footer{
-  margin-left: auto;
+footer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
   grid-column-gap: 8px;
   grid-row-gap: 8px;
-  flex-flow: column;
-  justify-content: flex-start;
-  align-items: flex-end;
-  display: flex;
 }
 
 /* =========================================================

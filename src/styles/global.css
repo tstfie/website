@@ -550,11 +550,21 @@ body {
 }
 
 .footer {
-  grid-column-gap: 8px;
-  grid-row-gap: 8px;
+  grid-column-gap: 4px;
+  grid-row-gap: 4px;
   flex-flow: column;
   justify-content: flex-start;
   align-items: flex-end;
+  display: flex;
+}
+
+.footer-section {
+  gap: 8px;
+  flex-flow: row;
+  justify-content: flex-end;
+  max-width: none;
+  margin-left: 0;
+  margin-right: 0;
   display: flex;
 }
 

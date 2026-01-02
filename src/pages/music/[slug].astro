@@ -215,8 +215,8 @@ function toISODuration(input?: string) {
         </div>
       </section>
     </section>
-
     <Footer />
   </div>
+<script is:inline>const streamGroups = document.querySelectorAll('.stream-group'); streamGroups.forEach(group => { const trigger = group.querySelector('.stream-trigger'); const options = group.querySelectorAll('[data-stream-option]'); if (!trigger || options.length === 0) return; let closeTimeout = null; let isOpen = false; const openMenu = () => { clearTimeout(closeTimeout); options.forEach(option => { option.style.display = 'inline-flex'; }); isOpen = true; }; const closeMenu = (delay = 150) => { clearTimeout(closeTimeout); closeTimeout = setTimeout(() => { options.forEach(option => { option.style.display = 'none'; }); isOpen = false; }, delay); }; /* Desktop hover */ trigger.addEventListener('mouseenter', openMenu); group.addEventListener('mouseleave', () => closeMenu(400)); /* Mobile / touch */ trigger.addEventListener('click', (e) => { e.preventDefault(); if (isOpen) { closeMenu(0); } else { openMenu(); } }); /* Optional: close when clicking a stream option */ options.forEach(option => { option.addEventListener('click', () => { closeMenu(0); }); }); }); </script>
 </body>
 </html>

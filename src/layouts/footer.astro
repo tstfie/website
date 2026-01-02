@@ -1,24 +1,36 @@
 ---
+import "../styles/base.css"
+import "../styles/global.css"
+import "../styles/normalise.css"
+
 const d = new Date();
 let year = d.getFullYear();
 ---
 
-<footer>
-  <section class="interaction-wrapper">
-    <a href="/music" class="cta">Music</a>
-    <a href="/contact" class="cta">Contact</a>
-    <a href="/about" class="cta">About</a>
-    <a href="/" class="cta">Home</a>
+<footer class="footer">
+  <section class="footer-section">
+    <div class="interaction-wrapper h5">
+      <a href="/music" class="cta">Music</a>
+      <a href="/contact" class="cta">Contact</a>
+      <a href="/about" class="cta">About</a>
+      <a href="/" class="cta">Home</a>
+    </div>
   </section>
-  <div class="interaction-wrapper">
-    <a href="/signup" class="cta primary gold">Sign up</a>
-    <a href="#" class="cta primary">Socials</a>
-  </div>
-  <div class="interaction-wrapper">
-    <div class="meta">© {year} Niklay Wiborny, tstfie</div>
-  </div>
-  <div class="interaction-wrapper">
-    <a href="/privacy" class="link">Privacy Policy</a>
-    <a href="/music/snippets" class="link">Snippets</a>
-  </div>
+  <section class="footer-section">
+    <div class="interaction-wrapper h5">
+      <a href="/signup" class="cta primary gold">Sign up</a>
+      <a href="#" class="cta primary">Socials</a>
+    </div>
+  </section>
+  <section class="footer-section">
+    <div class="interaction-wrapper h5">
+      <div class="meta">© {year} Niklay Wiborny, tstfie</div>
+    </div>
+  </section>
+  <section class="footer-section">
+    <div class="interaction-wrapper h5">
+      <a class ="meta" href="/privacy" class="link">Privacy Policy</a>
+      <a class="meta" href="/music/snippets" class="link">Snippets</a>
+    </div>
+  </section>
 </footer>
