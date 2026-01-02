@@ -1,4 +1,8 @@
 ---
+import "../../styles/base.css"
+import "../../styles/global.css"
+import "../../styles/normalise.css"
+
 import { sanityClient } from "../../lib/sanity";
 import { urlForImage } from "../../lib/url-for-image";;
 
@@ -32,17 +36,16 @@ const project = await sanityClient.fetch<{
   slug?: { current: string };
   releaseDate: string;
   length: string;
-  links: {
-    streaming: {
-      service: {
-        index: string;
-        url: URL;
-        label: string;
-      }
-    };
-    download: URL;
-  }
-  cover: typeof Image;
+  cover: any;
+
+  links?: {
+    streaming?: {
+      label: string;
+      url: string;
+    }[];
+    download?: string;
+  };
+
   tracklists: {
     title: string;
     tracks: {
@@ -50,7 +53,7 @@ const project = await sanityClient.fetch<{
       duration: string;
       order: number;
       artists: {
-        name: string
+        name: string;
       }[];
     }[];
   }[];

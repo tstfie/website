@@ -1,4 +1,8 @@
 ---
+import "../styles/base.css"
+import "../styles/global.css"
+import "../styles/normalise.css"
+
 import type { SanityDocument } from "@sanity/client";
 import PortableText from "../components/PortableText.astro";
 import { sanityClient } from "../lib/sanity";
@@ -59,7 +63,7 @@ function formatDate(dateString: string) {
 	{/*-------- Header component --------*/}
 	<Header>
 		<a href="/about" class="navigation">Info</a>
-		<a href="#projects" class="navigation">View Projects</a>
+		<a href="#projects" class="navigation">View projects</a>
 	</Header>
 	{/*-------- Main content --------*/}
     <section class="window">
