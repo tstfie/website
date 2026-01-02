@@ -98,7 +98,7 @@ nav {
   display: flex;
   flex-flow: column;
   justify-content: flex-end;
-  align-items: flex-end;
+  align-items: flex-start;
   grid-column-gap: 4px;
   grid-row-gap: 4px;
   text-underline-offset: 2px;
@@ -111,7 +111,7 @@ footer{
   grid-row-gap: 8px;
   flex-flow: column;
   justify-content: flex-end;
-  align-items: flex-end;
+  align-items: flex-start;
   display: flex;
 }
 
