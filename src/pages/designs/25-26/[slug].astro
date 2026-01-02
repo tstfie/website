@@ -9,6 +9,7 @@ import { urlForImage } from "../../../lib/url-for-image";;
 import Header from '../../../layouts/header.astro';
 import Head from '../../../layouts/head.astro';
 import Footer from '../../../layouts/footer.astro'
+import type { Slug } from "sanity";
 
 
 // ------------------------------
@@ -35,28 +36,35 @@ const collection = await sanityClient.fetch<{
   title: string;
   type: string;
   slug?: { current: string };
+  lengthDisplay: string;
   releaseDate: string;
-  tracklist: {
+  tracklists: {
     title: string;
-    duration: string;
-    order: number;
-    artists: { name: string }[];
-    designImage: any;
+    tracks: {
+      title: string;
+      duration?: string;
+      order: number;
+      artists?: { name: string }[];
+      designImage: any;
+    }[];
   }[];
 } | null>(`
   *[_type == "work" && slug.current == $slug && releaseDate >= "2025-06-01" && releaseDate <= "2026-05-31"][0]{
     type,
     title,
     slug,
+    lengthDisplay,
     releaseDate,
-    tracklist[]->{
+    tracklists[]{
       title,
-      duration,
-      order,
-      artists[]->{
-        name
-      },
-      designImage
+      tracks[]->{
+        title,
+        order,
+        artists[]->{
+          name
+        },
+        designImage
+      }
     }
   }
 `, { slug });
@@ -84,21 +92,42 @@ function formatDate(dateString: string) {
 
 const pageTitle = collection.title
 ---
-<html>
+<html lang="en">
 <Head
   title={`${pageTitle}`}
-  description={`Collection by Niklay — ${pageTitle}`}
+  description={`Collection by Niklay`}
   canonical={`https://www.tstfie.ch/designs/25-26/${collection.slug?.current ?? ""}`}
 />
+<script type="application/ld+json">
+{JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "Collection",
+  "name": collection.title,
+  "url": `https://tstfie.ch/designs/25-26/${collection.slug?.current}`,
+  "datePublished": collection.releaseDate,
+  "creator": { "@type": "Person", "name": "Niklay" },
+  "numberOfItems": collection.tracklists?.reduce(
+    (acc, list) => acc + (list.tracks?.length ?? 0), 0
+  ),
+  "hasPart": collection.tracklists?.flatMap(list =>
+    list.tracks.map(track => ({
+      "@type": "VisualArtwork",
+      "name": track.title,
+      "position": track.order,
+      "image": urlForImage(track.designImage).width(1200).url()
+    }))
+  )
+}, null, 2)}
+</script>
 <body>
   <div class="padding">
     <Header>
         <a href="/" class="navigation">Home</a>
         <a href="#top" class="navigation">Top</a>
     </Header>
-    <article class="w-layout-blockcontainer collection w-container">
+    <article class="collection">
       <header class="collection-header">
-        <div>
+        <div class="project-header">
           <p class="meta">25-26</p>
           <h1>{collection.title}</h1>
         </div>
@@ -108,22 +137,28 @@ const pageTitle = collection.title
       </header>
       <div class="hflex">
         <section class="collection-scroll">
-            {collection.tracklist?.map((track) => (
-                <section class="design-wrapper">
-                    <div class="title">{track.title}</div>
-                    <img src={urlForImage(track.designImage).width(1200).url()} class="sneaker-design" sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 939.984375px"/>
+          {collection.tracklists?.map((list) => (
+            <>
+              {list.tracks.map((track) => (
+                <section class="design-wrapper" key={track.order}>
+                  <div class="title">{track.title}</div>
+                  <img src={urlForImage(track.designImage).width(1200).url()} class="sneaker-design" sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 939.984375px"
+                  />
                 </section>
-            ))}
+              ))}
+            </>
+          ))}
         </section>
+
         <div class="collection-tracklist">
-            {collection.tracklist?.map((track) => (
-                <h3>{track.title}<br/></h3>
-            ))}
+          {collection.tracklists?.map((list) =>
+            list.tracks.map((track) => <h3 key={track.order}>{track.title}<br/></h3>)
+          )}
         </div>
       </div>
       <section class="section">
         <div class="meta">{formatDate(collection.releaseDate)}</div>
-        <div class="meta">{collection.type} by Niklay</div>
+        <div class="meta">{collection.type} by Niklay, {collection.lengthDisplay}</div>
           <div class="meta">@{new Date(collection.releaseDate).getFullYear()} Niklay Wiborny, for tstfie</div>
       </section>
     </article>
