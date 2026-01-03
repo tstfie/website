@@ -39,6 +39,7 @@ const data = await sanityClient.fetch<{
     slug?: { current: string };
     archiveRole: string;
     parentWork: {
+slug: any;
       title: string;
     }
     releaseDate: string;
@@ -152,7 +153,7 @@ function toISODuration(input?: string) {
 
 <html lang="en">
 <Head
-  title={project.title}
+  title={`${project.title} | tstfie`}
   description={`${project.type} by Niklay — ${formatDate(project.releaseDate)}`}
   canonical={`https://tstfie.ch/${project.slug?.current}`}
 />
@@ -228,13 +229,12 @@ function toISODuration(input?: string) {
             {list.title && <h3>{list.title}</h3>}
             {list.tracks.map(track => (
               <div class="track">
-                <div class="meta number">{track.order.toString().padStart(2, "0")}</div>
+                <div class="meta number" style="margin-left:4px">{track.order.toString().padStart(2, "0")}</div>
                 <div class="track-title">
                   <div class="title">{track.title}</div>
                   <div class="meta">{track.artists.map(a => a.name).join(", ")}</div>
                 </div>
-                <div class="meta number">{track.duration}</div>
-                <div>…</div>
+                <div class="meta number" style="margin-right:12px">{track.duration}</div>
               </div>
             ))}
           </div>

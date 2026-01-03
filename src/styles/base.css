@@ -6,6 +6,7 @@ html {
   font-size: 16px;
   line-height: 1.4;
   -webkit-text-size-adjust: 100%;
+  margin: 0;
 }
 
 body {
@@ -17,7 +18,7 @@ body {
   background-repeat: repeat;
   background-size: 256px;
   background-attachment: fixed;
-  font-family: "Outfit", sans-serif;
+  font-family: "Outfit", Helvetica, Arial, sans-serif;
   font-size: 16px;
   line-height: 16px;
 }
