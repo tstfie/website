@@ -4,8 +4,6 @@ import { defineConfig } from 'astro/config';
 import sanity from '@sanity/astro';
 import react from '@astrojs/react';
 
-import vercel from '@astrojs/vercel';
-
 // https://astro.build/config
 export default defineConfig({
   redirects: {
@@ -23,5 +21,4 @@ export default defineConfig({
   ), react()],
 
   output: 'static',
-  adapter: vercel()
 });
