@@ -23,7 +23,7 @@ const projects = await sanityClient.fetch<{
   releaseDate: string;
   cover: Image;
 }[]>(`
-  *[_type == "work" && type != "Collection"] | order(releaseDate desc) {
+  *[_type == "work" && type != "Collection" && archiveRole == "primary"] | order(releaseDate desc) {
     title,
     slug,
     cover,

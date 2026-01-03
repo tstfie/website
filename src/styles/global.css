@@ -37,6 +37,10 @@ body {
   overflow: hidden;
 }
 
+.website-name:hover .secondary-nav {
+  display:block
+}
+
 .nav {
   grid-column-gap: 4px;
   grid-row-gap: 4px;
@@ -257,6 +261,14 @@ body {
   margin-bottom: 20px;
 }
 
+.project-meta-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content:flex-start;
+  gap: 4px;
+  user-select: none;
+}
+
 .cta {
   grid-column-gap: 16px;
   grid-row-gap: 16px;
@@ -356,6 +368,10 @@ body {
 
 .interaction-wrapper.h5 {
   font-size: 20px;
+}
+
+.interaction-wrapper.h5.additional {
+  margin-left:auto;
 }
 
 .interaction-wrapper.credits {
@@ -639,6 +655,7 @@ body {
   }
 
   .secondary-nav {
+    display: none;
     position: absolute;
     top: 36px;
   }
@@ -656,6 +673,14 @@ body {
   .track {
     font-size: 24px;
     line-height: 24px;
+  }
+
+  .secondary-nav {
+    display: none;
+  }
+
+  .website-name .secondary-nav {
+    display: none;
   }
 }
 
@@ -688,10 +713,19 @@ body {
     width: 240px;
     max-width: 100%;
   }
-
+  .project-meta-wrapper {
+    display: flex;
+    flex-flow:wrap;
+    align-items: flex-start;
+    gap: 12px;
+  }
   .interaction-wrapper.credits {
     grid-column-gap: 2px;
     grid-row-gap: 2px;
+  }
+
+  .interaction-wrapper.h5 {
+    font-size:16px;
   }
 
   .collection-header h1{

@@ -9,6 +9,7 @@ import { urlForImage } from "../../lib/url-for-image";
 import Header from '../../layouts/header.astro';
 import Head from '../../layouts/head.astro';
 import Footer from '../../layouts/footer.astro'
+import type { Slug } from "sanity";
 
 // ------------------------------
 // 1️⃣ Static paths
@@ -30,33 +31,56 @@ export async function getStaticPaths() {
 // ------------------------------
 const { slug } = Astro.params;
 
-const project = await sanityClient.fetch<{
-  title: string;
-  type: string;
-  slug?: { current: string };
-  releaseDate: string;
-  lengthDisplay: string;
-  durationMinutes?: number;
-  durationSeconds?: number;
-  cover: any;
-  links?: {
-    streaming?: { label: string; url: string }[];
-    download?: string;
-  };
-  tracklists: {
+const data = await sanityClient.fetch<{
+  project: {
+    _id: string;
     title: string;
-    tracks: {
+    type: string;
+    slug?: { current: string };
+    archiveRole: string;
+    parentWork: {
       title: string;
-      duration: string;
-      order: number;
-      artists: { name: string }[];
+    }
+    releaseDate: string;
+    lengthDisplay: string;
+    durationMinutes?: number;
+    durationSeconds?: number;
+    cover: any;
+    links?: {
+      streaming?: { label: string; url: string }[];
+      download?: string;
+    };
+    tracklists: {
+      title: string;
+      tracks: {
+        title: string;
+        duration: string;
+        order: number;
+        artists: { name: string }[];
+      }[];
     }[];
+  };
+  additional: {
+    title: string;
+    slug: { current: string };
+    releaseDate: string;
   }[];
 } | null>(`
-  *[_type == "work" && slug.current == $slug && type != "Collection"][0]{
+{
+  "project": *[
+    _type == "work" &&
+    slug.current == $slug &&
+    type != "Collection"
+  ][0]{
+    _id,
     type,
     title,
     slug,
+    archiveRole,
+    parentWork->{
+      title,
+      slug
+    },
     releaseDate,
     lengthDisplay,
     durationMinutes,
@@ -75,13 +99,26 @@ const project = await sanityClient.fetch<{
         artists[]->{ name }
       }
     }
+  },
+
+  "additional": *[
+    _type == "work" &&
+    archiveRole == "additional" &&
+    parentWork->slug.current == $slug
+  ] | order(releaseDate asc){
+    title,
+    slug,
+    releaseDate
   }
+}
 `, { slug });
 
 
-if (!project) {
+if (!data?.project) {
   throw new Error(`Project not found for slug: ${slug}`);
 }
+
+const { project, additional } = data;
 
 // ------------------------------
 // 3️⃣ Helpers
@@ -205,13 +242,37 @@ function toISODuration(input?: string) {
       </section>
 
       <section class="section">
-        <div class="meta">{formatDate(project.releaseDate)}</div>
-        <div class="meta">
-          {project.durationMinutes ?? 0} minutes, 
-          {project.durationSeconds ? ` ${project.durationSeconds} seconds` : ""}
-        </div>
-        <div class="meta">
-          © {new Date(project.releaseDate).getFullYear()} Niklay Wiborny, for tstfie
+        <div class="project-meta-wrapper" style="align-items:center">
+          <div style="margin:0">
+            <div class="meta">{formatDate(project.releaseDate)}</div>
+            <div class="meta">{project.durationMinutes} minutes, {project.durationSeconds} seconds</div>
+            {project.archiveRole === "additional" && project.parentWork && (
+            <div class ="meta">Related to {project.parentWork.title}</div>
+            )}
+            <div class="meta">@{new Date(project.releaseDate).getFullYear()} Niklay Wiborny, for tstfie</div>
+          </div>
+          {(
+            (additional.length > 0 && project.archiveRole !== "additional") ||
+            (project.archiveRole === "additional" && project.parentWork)
+          ) && (
+            <div class="interaction-wrapper h5 additional">
+              {project.archiveRole === "additional" ? (
+                <a
+                  class="cta"
+                  href={`/music/${project.parentWork.slug.current}`}
+                >
+                  Additional release
+                </a>
+              ) : (
+                <a
+                  class="cta"
+                  href={`/music/${additional[0].slug.current}`}
+                >
+                  {additional.length} additional release{additional.length > 1 ? "s" : ""}
+                </a>
+              )}
+            </div>
+          )}
         </div>
       </section>
     </section>

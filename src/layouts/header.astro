@@ -17,3 +17,42 @@
     </div>
   </div>
  </section>
+ <script is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+  const websiteNameDiv = document.querySelector('.website-name');
+  const secondaryNav = document.querySelector('.secondary-nav');
+  let timer;
+
+  // Desktop hover functionality
+  websiteNameDiv.addEventListener('mouseenter', () => {
+    clearTimeout(timer); // Clear the timeout if the user hovers quickly
+    secondaryNav.style.display = 'block';
+  });
+
+  websiteNameDiv.addEventListener('mouseleave', () => {
+    timer = setTimeout(() => {
+      secondaryNav.style.display = 'none';
+    }, 400); // Hide the secondary nav after 0.4 seconds
+  });
+
+  // Mobile tap functionality
+  websiteNameDiv.addEventListener('click', (event) => {
+    event.stopPropagation(); // Prevent event from propagating to document
+    if (secondaryNav.style.display === 'block') {
+      secondaryNav.style.display = 'none'; // Hide if already open
+    } else {
+      secondaryNav.style.display = 'block'; // Show if not open
+    }
+  });
+
+  // Close secondary nav when clicking outside of the website-name div
+  document.addEventListener('click', () => {
+    secondaryNav.style.display = 'none';
+  });
+
+  // Prevent click event from propagating to the document when clicking inside the website-name div
+  websiteNameDiv.addEventListener('click', (event) => {
+    event.stopPropagation();
+  });
+});
+ </script>
