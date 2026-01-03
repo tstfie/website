@@ -37,8 +37,12 @@ body {
   overflow: hidden;
 }
 
-.website-name:hover .secondary-nav {
-  display:block
+.secondary-nav {
+  display:none
+}
+
+.secondary-nav.is-open {
+  display: block;
 }
 
 .nav {
@@ -654,12 +658,6 @@ body {
   .large-breakpoint-only {
     display: none;
   }
-
-  .secondary-nav {
-    display: none;
-    position: absolute;
-    top: 36px;
-  }
 }
 
 @media screen and (max-width: 767px) {
@@ -675,14 +673,6 @@ body {
     font-size: 24px;
     line-height: 24px;
   }
-
-  .secondary-nav {
-    display: none;
-  }
-
-  .website-name .secondary-nav {
-    display: none;
-  }
 }
 
 @media screen and (max-width: 479px) {
@@ -694,6 +684,10 @@ body {
   .paragraph {
     font-size: 20px;
     line-height: 20px;
+  }
+
+  .collection-header {
+    display: none;
   }
 
   .hero {

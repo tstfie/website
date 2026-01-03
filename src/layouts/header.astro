@@ -17,42 +17,41 @@
     </div>
   </div>
  </section>
- <script is:inline>
+<script is:inline>
   document.addEventListener('DOMContentLoaded', () => {
-  const websiteNameDiv = document.querySelector('.website-name');
-  const secondaryNav = document.querySelector('.secondary-nav');
-  let timer;
+    const websiteName = document.querySelector('.website-name');
+    const secondaryNav = document.querySelector('.secondary-nav');
+    const navs = document.querySelectorAll('.nav');
 
-  // Desktop hover functionality
-  websiteNameDiv.addEventListener('mouseenter', () => {
-    clearTimeout(timer); // Clear the timeout if the user hovers quickly
-    secondaryNav.style.display = 'block';
-  });
+    let closeTimer;
+    const DELAY = 300; // ms
 
-  websiteNameDiv.addEventListener('mouseleave', () => {
-    timer = setTimeout(() => {
-      secondaryNav.style.display = 'none';
-    }, 400); // Hide the secondary nav after 0.4 seconds
-  });
+    const open = () => {
+      clearTimeout(closeTimer);
 
-  // Mobile tap functionality
-  websiteNameDiv.addEventListener('click', (event) => {
-    event.stopPropagation(); // Prevent event from propagating to document
-    if (secondaryNav.style.display === 'block') {
-      secondaryNav.style.display = 'none'; // Hide if already open
-    } else {
-      secondaryNav.style.display = 'block'; // Show if not open
-    }
-  });
+      secondaryNav.classList.add('is-open');
+      navs.forEach(n => (n.style.display = 'none'));
+    };
 
-  // Close secondary nav when clicking outside of the website-name div
-  document.addEventListener('click', () => {
-    secondaryNav.style.display = 'none';
-  });
+    const close = () => {
+      clearTimeout(closeTimer);
 
-  // Prevent click event from propagating to the document when clicking inside the website-name div
-  websiteNameDiv.addEventListener('click', (event) => {
-    event.stopPropagation();
+      closeTimer = setTimeout(() => {
+        secondaryNav.classList.remove('is-open');
+        navs.forEach(n => (n.style.display = ''));
+      }, DELAY);
+    };
+
+    websiteName.addEventListener('mouseenter', open);
+    websiteName.addEventListener('mouseleave', close);
+
+    // Mobile click
+    websiteName.addEventListener('click', (e) => {
+      e.stopPropagation();
+      secondaryNav.classList.contains('is-open') ? close() : open();
+    });
+
+    // Click outside closes (same delay)
+    document.addEventListener('click', close);
   });
-});
- </script>
+</script>
