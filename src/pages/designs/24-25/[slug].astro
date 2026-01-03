@@ -10,6 +10,7 @@ import Header from '../../../layouts/header.astro';
 import Head from '../../../layouts/head.astro';
 import Footer from '../../../layouts/footer.astro'
 import type { Slug } from "sanity";
+import { Image } from "astro:assets";
 
 
 // ------------------------------
@@ -142,7 +143,7 @@ const pageTitle = collection.title
               {list.tracks.map((track) => (
                 <section class="design-wrapper" key={track.order}>
                   <div class="title">{track.title}</div>
-                  <img src={urlForImage(track.designImage).width(1200).url()} class="sneaker-design" sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 939.984375px"
+                  <Image src={urlForImage(track.designImage).width(1200).url()} class="sneaker-design" alt="" inferSize={true} sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 939.984375px"
                   />
                 </section>
               ))}
@@ -152,7 +153,7 @@ const pageTitle = collection.title
 
         <div class="collection-tracklist">
           {collection.tracklists?.map((list) =>
-            list.tracks.map((track) => <h3 key={track.order}>{track.title}<br/></h3>)
+            list.tracks.map((track) => <h3 style="line-height:120%" key={track.order}>{track.title}<br/></h3>)
           )}
         </div>
       </div>

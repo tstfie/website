@@ -63,7 +63,7 @@ body {
   grid-row-gap: 140px;
   flex-flow: column;
   max-width: none;
-  min-height: 100vh;
+  min-height: 100dvh;
   margin-left: 0;
   margin-right: 0;
   padding: 32px 64px 64px;
