@@ -143,7 +143,7 @@ const pageTitle = collection.title
               {list.tracks.map((track) => (
                 <section class="design-wrapper" key={track.order}>
                   <div class="title">{track.title}</div>
-                  <Image src={urlForImage(track.designImage).width(1200).url()} class="sneaker-design" alt="" inferSize={true} sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 939.984375px"
+                  <img src={urlForImage(track.designImage).width(1200).url()} class="sneaker-design" alt="" sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 939.984375px"
                   />
                 </section>
               ))}
