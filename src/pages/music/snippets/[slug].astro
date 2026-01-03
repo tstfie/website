@@ -1,6 +1,4 @@
 ---
-export const prerender = true;
-
 export async function getStaticPaths() {
   const snippets = await sanityClient.fetch(`
     *[_type == "snippet"]{ "slug": slug.current }

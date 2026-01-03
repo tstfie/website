@@ -23,6 +23,10 @@ body {
   line-height: 16px;
 }
 
+html, body {
+  overscroll-behavior-y: none;
+}
+
 span{
   margin-top: 0;
   margin-bottom: 0;
