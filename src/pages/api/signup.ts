@@ -65,27 +65,35 @@ const listIds = [...new Set(
   interests.flatMap(i => LIST_MAP[i])
 )];
 
-    const brevoRes = await fetch("https://api.brevo.com/v3/contacts", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "api-key": import.meta.env.BREVO_API_KEY,
-      },
-      body: JSON.stringify({
-        email,
-        attributes: {
-          FIRSTNAME: firstName || undefined,
-          LASTNAME: lastName || undefined,
-          MESSAGE: message || undefined,
+    const brevoRes = await fetch(
+      "https://api.brevo.com/v3/contacts/doubleOptinConfirmation",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "api-key": import.meta.env.BREVO_API_KEY,
         },
-        listIds,
-        updateEnabled: true,
-      }),
-    });
+        body: JSON.stringify({
+          email,
+          attributes: {
+            FIRSTNAME: firstName || undefined,
+            LASTNAME: lastName || undefined,
+            MESSAGE: message || undefined,
+            DOI_STATUS: "PENDING",
+          },
+
+          includeListIds: listIds,          // lists are added after confirmation
+          templateId: 1,                  // DOI template ID
+          redirectionUrl: "https://tstfie.ch/signup/success",
+
+        }),
+      }
+    );
 
     if (!brevoRes.ok) {
-      const err = await brevoRes.text();
-      console.error("Brevo error:", err);
+    const text = await brevoRes.text();
+    console.error("Brevo status:", brevoRes.status);
+    console.error("Brevo body:", text);
       return new Response("Failed to submit form", { status: 500 });
     }
 
@@ -98,9 +106,13 @@ const listIds = [...new Set(
         Location: "/signup/success",
       },
     });
-  } catch (err) {
-    console.error("Contact API error:", err);
-    return new Response("Server error", { status: 500 });
-  }
+    } catch (err) {
+      console.error("Contact API error:", err);
+
+      return new Response(
+        err instanceof Error ? err.message : String(err),
+        { status: 500 }
+      );
+    }
 }
 ;
