@@ -25,6 +25,14 @@ document.addEventListener("DOMContentLoaded", () => {
       if (nav.contains(e.target)) return;
 
       nav.classList.remove("is-open");
+    
+    document.addEventListener("click", (e) => {
+      if (!nav.classList.contains("is-open")) return;
+      if (nav.contains(e.target)) return;
+
+      e.stopPropagation(); // IMPORTANT on touch
+      nav.classList.remove("is-open");
+    });
 
       /*// Remove ?projects=open if it exists //*/
       const params = new URLSearchParams(window.location.search);

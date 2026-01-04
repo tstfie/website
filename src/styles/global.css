@@ -34,6 +34,7 @@
   text-decoration-thickness: 2.2px;
   display: flex;
   position: fixed;
+  min-width: 240px;
 }
 
 .padding {
@@ -592,8 +593,8 @@
 }
 
 .projects-nav {
-  display:inherit;
-  min-width:150px;
+  position: relative;        /* anchor */
+  display: inline-flex;
 }
 
 .projects-nav.is-open .view-projects {
