@@ -155,15 +155,45 @@ li {
 
 /*//
    Forms //*/
+input {
+  background-color: transparent;
+}
+/*/ checkbox /*/
 input[type="checkbox"] {
+  /* Add if not using autoprefixer */
+  -webkit-appearance: none;
+  appearance: none;
+  /* For iOS < 15 to remove gradient background */
+  background-color: #fff;
+  /* Not removed via appearance */
+  margin: 0;
+  font: inherit;
+  color: currentColor;
   width: 20px;
   height: 20px;
-  border: 1px solid;
-  background: transparent;
-  border-radius: 2px;
+  border: 1px solid currentColor;
+  border-radius: 20px;
   display: grid;
-  place-items: center;
+  place-content: center;
 }
+
+input[type="checkbox"]::before {
+  content: "";
+  width: 20px;
+  height: 20px;
+  border-radius:20px;
+  transform: scale(0);
+  box-shadow: inset 1em 1em var(--form-control-color);
+}
+
+input[type="checkbox"]:checked::before {
+  transform: scale(1);
+  background-color: #262626;
+  transition: 15ms transform ease-out
+}
+
+/*/ other /*/
+
 input,
 textarea {
   width: 100%;
@@ -214,8 +244,8 @@ article {
   }
 
   h1 {
-    font-size: 32px;
-    line-height: 32px;
+    font-size: 36px;
+    line-height: 36px;
   }
 
   h2 {

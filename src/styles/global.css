@@ -80,6 +80,7 @@ body {
 }
 
 .form-block {
+  margin-top: 4px;
   width:100%;
 }
 
@@ -605,6 +606,10 @@ body {
   gap: 4px;
 }
 
+.projects-nav {
+  display:inherit;
+}
+
 .projects-nav.is-open .view-projects {
   display: none;
 }
@@ -648,6 +653,7 @@ body {
 
   .window {
     width: 80%;
+    margin-top: -40px;
   }
 
   .asterisk {
@@ -727,6 +733,10 @@ body {
     flex-flow:wrap;
     align-items: flex-start;
     gap: 12px;
+  }
+
+  .meta.number {
+  font-size: 12px;
   }
   .interaction-wrapper.credits {
     grid-column-gap: 2px;

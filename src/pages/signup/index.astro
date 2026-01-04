@@ -23,10 +23,8 @@ import '../../styles/normalise.css';
       <a onclick="history.back()" class="navigation">Back</a>
     </Header>
     <section class="window contact" >
-      <div>
         <h1>Sign up</h1>
         <p>Receive updates</p>
-      </div>
       <section class="contact-section">
         <div class="form-block">
           <form
@@ -52,20 +50,20 @@ import '../../styles/normalise.css';
               <label for="email"><h5>email address</h5></label>
               <input class="input-field email" maxlength="256" name="email" data-name="Email" placeholder="" type="email" id="email" required="">
             </div>
-            <div>
               <label for="interest"><h5>get notified for..<span class="asterisk">*</span></h5></label>
-                <div class="hflex">
-                  <input type="checkbox" name="interest" value="designs" class="input-field checkbox" /><label><h5>Designs</h5></label>
+              <div class="hflex" style="grid-column-gap:12px">
+                <div class="hflex" style="flex-flow:row-reverse; align-items:center;">
+                  <label><h5>Designs</h5></label><input type="checkbox" name="interest" value="designs" class="input-field checkbox" />
                 </div>
-                <div class="hflex">
-                  <input type="checkbox" name="interest" value="music" class="input-field checkbox" /><label><h5>Music</h5></label>
+                <div class="hflex" style="flex-flow:row-reverse; align-items:center;">
+                  <label><h5>Music</h5></label><input type="checkbox" name="interest" value="music" class="input-field checkbox" />
                 </div>
-                <div class="hflex">
-                  <input type="checkbox" name="interest" value="other" class="input-field checkbox" /><label><h5>Other</h5></label>
+                <div class="hflex" style="flex-flow:row-reverse; align-items:center;">
+                  <label><h5>Other</h5></label><input type="checkbox" name="interest" value="other" class="input-field checkbox" />
                 </div>
             </div>
-            <div class="interaction-wrapper">
-              <button type="submit" class="cta"><h5>Submit</h5></button>
+            <div class="interaction-wrapper" style="margin-top:8px;">
+              <button type="submit" class="cta primary"><h5>Submit</h5></button>
             </div>
           </form>
         </div>
