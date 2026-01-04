@@ -105,8 +105,8 @@ nav {
   flex-flow: column;
   justify-content: flex-start;
   align-items: flex-end;
-  grid-column-gap: 4px;
-  grid-row-gap: 4px;
+  column-gap: 4px;
+  row-gap: 4px;
   text-underline-offset: 2px;
   position: fixed;
 }
@@ -116,8 +116,8 @@ footer {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  grid-column-gap: 8px;
-  grid-row-gap: 8px;
+  column-gap: 8px;
+  row-gap: 8px;
 }
 
 /*//
@@ -221,8 +221,8 @@ img {
    Structural //*/
 
 section {
-  grid-column-gap: 16px;
-  grid-row-gap: 16px;
+  column-gap: 16px;
+  row-gap: 16px;
   grid-template-rows: auto;
   grid-template-columns: 2fr .5fr;
   grid-auto-columns: 1fr;
