@@ -593,6 +593,7 @@
 
 .projects-nav {
   display:inherit;
+  min-width:150px;
 }
 
 .projects-nav.is-open .view-projects {
