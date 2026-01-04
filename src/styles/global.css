@@ -589,7 +589,7 @@
   flex-flow: column;
   justify-content: flex-start;
   align-items: flex-end;
-  column-gap: 4px;
+  row-gap: 4px;
 }
 
 .projects-nav {
