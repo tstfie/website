@@ -12,7 +12,7 @@ import Header from '../layouts/header.astro';
 import Head from '../layouts/head.astro';
 import Footer from '../layouts/footer.astro';
 
-import type { Image } from "sanity";
+import type { Image, UrlComponents } from "sanity";
 
 // ------------------------------
 // Fetch page data
@@ -24,13 +24,17 @@ const entry = await sanityClient.fetch<{
   heading: string;
   paragraph: string;
   image: Image;
+  link: URL;
+  linkTitle: string;
 }[]>(`
   *[_type == "audit"] | order(releaseDate desc) {
     releaseDate,
     title,
     heading,
     paragraph,
-    image
+    image,
+    link,
+    linkTitle
   }
 `);
 
@@ -39,16 +43,11 @@ const entry = await sanityClient.fetch<{
 // ------------------------------
 function formatDate(dateString: string) {
   const date = new Date(dateString);
-  const day = date.getDate();
-  const month = date.toLocaleString("en-GB", { month: "long" });
-  const year = date.getFullYear();
+  const day = String(date.getDate()).padStart(2, "0");
+  const month = String(date.getMonth() + 1).padStart(2, "0"); // months are 0-indexed
+  const year = String(date.getFullYear()).slice(-2); // last 2 digits
 
-  let ordinal = "th";
-  if (day % 10 === 1 && day !== 11) ordinal = "st";
-  else if (day % 10 === 2 && day !== 12) ordinal = "nd";
-  else if (day % 10 === 3 && day !== 13) ordinal = "rd";
-
-  return `${month} ${day}${ordinal}, ${year}`;
+  return `${day}/${month}/${year}`;
 }
 ---
 
@@ -78,12 +77,21 @@ function formatDate(dateString: string) {
         {entry.map((entry) => (
           <article class="audit-log-entry" data-open="false">
             <header class="log-entry-preview">
-              <p class="meta number">{entry.releaseDate}</p>
+              <p class="meta number">{formatDate(entry.releaseDate)}</p>
               <h3><span class="link">{entry.title}</span></h3>
             </header>
-            <section class="log-entry-content">
+            <section class="log-entry-content" style="text-decoration:none">
               <p><span class="h4">{entry.heading}</span><br/>{entry.paragraph}</p>
-              <img src={urlForImage(entry.image).width(1200).url()} class="project-cover audit" loading="lazy">
+              {entry.image && (
+                <img
+                  src={urlForImage(entry.image).width(1200).url()}
+                  class="project-cover audit"
+                  loading="lazy"
+                />
+              )}
+              {entry.link && (
+                <a href={entry.link} class="cta" style="margin-top:-8px;"><h5>{entry.linkTitle}</h5></a>
+              )}
             </section>
           </article>
         ))}

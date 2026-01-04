@@ -51,7 +51,7 @@ return `${month} ${day}${ordinal}, ${year}`;
         <a onclick="history.back()" class="navigation">Back</a>
     </Header>
     <section class="window">
-          <main class="vflex centered">
+          <main class="vflex centered" style="row-gap:12px; flex-direction:column-reverse;">
         {collections.map((collection: { slug: { current: any; }; title: unknown; releaseDate: string; length: unknown; }) => (
             <h3><a href={`/designs/23-24/${collection.slug.current}/`}>{collection.title}</a></h3>
         ))}

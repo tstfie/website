@@ -70,7 +70,7 @@ function formatDate(dateString: string) {
             <h2>{project.title}</h2>
             <p class="meta">{formatDate(project.releaseDate)}</p>
           </header>
-            <img src={urlForImage(project.cover).width(1200).url()} class="project-cover audit" loading="lazy" alt=""/>
+            <img src={urlForImage(project.cover).width(1200).url()} class="project-cover audit" style="margin-bottom:20px" loading="lazy" alt=""/>
           </section></a>
       ))}
 	  </div>
