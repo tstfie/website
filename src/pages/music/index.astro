@@ -57,25 +57,25 @@ function formatDate(dateString: string) {
   canonical="https://tstfie.ch/music/"
 />
 <body>
-  <div class="padding">
+  <container class="padding">
     <Header>
 		<a href="/" class="navigation">Home</a>
 		<a onclick=history.back() class="navigation">Back</a>
-	</Header>
+	  </Header>
     <section class="window">
-      <div class="audit-log">
-		{projects.map((project) => (
-  			<a href={`/music/${project.slug?.current}`}><section class="audit-log-entry">
-				<header>
-					<h2>{project.title}</h2>
-					<p class="meta">{formatDate(project.releaseDate)}</p>
-				</header>
-    			<img src={urlForImage(project.cover).width(1200).url()} class="project-cover audit" loading="lazy" alt=""/>
-  			</section></a>
-		))}
-	</div>
+    <div class="audit-log">
+      {projects.map((project) => (
+          <a href={`/music/${project.slug?.current}`}><section class="audit-log-entry">
+          <header>
+            <h2>{project.title}</h2>
+            <p class="meta">{formatDate(project.releaseDate)}</p>
+          </header>
+            <img src={urlForImage(project.cover).width(1200).url()} class="project-cover audit" loading="lazy" alt=""/>
+          </section></a>
+      ))}
+	  </div>
     </section>
     <Footer/>
-  </div>
+  </container>
 </body>
 </html>

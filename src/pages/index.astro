@@ -60,14 +60,20 @@ function formatDate(dateString: string) {
 />
 <body>
   <container class="padding">
-	{/*-------- Header component --------*/}
-	<Header>
-		<a href="/about" class="navigation">Info</a>
-		<a href="#projects" class="navigation">View projects</a>
-	</Header>
-	{/*-------- Main content --------*/}
+	{/*// Header //*/}
+    <Header>
+      <a href="/about" class="navigation">Info</a>
+      <div class="projects-nav">
+        <a href="#projects" class="navigation view-projects">View projects</a>
+
+        <div class="projects-links">
+          <a href="/designs/25-26" class="navigation">Designs</a>
+          <a href="/music" class="navigation">Music</a>
+        </div>
+      </div>
+    </Header>
+	{/*// Main content //*/}
     <section class="window">
-	{/*---- Audit log ----*/}
       <div class="audit-log" id="projects">
         {entry.map((entry) => (
           <article class="audit-log-entry" data-open="false">
@@ -83,27 +89,28 @@ function formatDate(dateString: string) {
         ))}
       </div>
     </section>
-	{/*-------- Footer component --------*/}
+	{/*// Footer component //*/}
 	<Footer/>
   </container>
+  {/*// Audit Log Animation //*/}
 <script is:inline>
   document.addEventListener('DOMContentLoaded', () => {
     const entries = document.querySelectorAll('.audit-log-entry');
 
     entries.forEach(entry => {
       entry.addEventListener('click', (e) => {
-        // If entry is already open, do nothing
+        /*/ If entry is already open, do nothing /*/
         if (entry.dataset.open === 'true') return;
 
-        // Close all other entries
+        /*/ Close all other entries /*/
         entries.forEach(e => e.dataset.open = 'false');
 
-        // Open this one
+        /*/ Open this one /*/
         entry.dataset.open = 'true';
       });
     });
 
-    // Clicking outside closes all entries
+    /*/ Clicking outside closes all entries /*/
     document.addEventListener('click', (e) => {
       if (![...entries].some(entry => entry.contains(e.target))) {
         entries.forEach(entry => entry.dataset.open = 'false');

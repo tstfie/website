@@ -37,14 +37,6 @@ body {
   overflow: hidden;
 }
 
-.secondary-nav {
-  display:none
-}
-
-.secondary-nav.is-open {
-  display: block;
-}
-
 .nav {
   grid-column-gap: 4px;
   grid-row-gap: 4px;
@@ -600,6 +592,33 @@ body {
   grid-row-gap: 0px;
   flex-flow: column;
   display: flex;
+}
+
+/*//
+    Animations //*/
+
+.projects-links   {
+  display: none;
+  flex-flow: column;
+  justify-content: flex-start;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.projects-nav.is-open .view-projects {
+  display: none;
+}
+
+.projects-nav.is-open .projects-links {
+  display: flex;
+}
+
+.secondary-nav {
+  display:none
+}
+
+.secondary-nav.is-open {
+  display: block;
 }
 
 @media screen and (max-width: 991px) {

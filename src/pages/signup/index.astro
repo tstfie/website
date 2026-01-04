@@ -15,10 +15,12 @@ import '../../styles/normalise.css';
    canonical="https://www.tstfie.ch/signup"
 />
 <body>
-  <div class="padding">
+  <container class="padding">
     <Header>
-        <a href="/#projects" class="navigation">View projects</a>
-        <a onclick=history.back() class="navigation">Back</a>
+      <div class="projects-nav">
+        <a href="/?projects=open" class="navigation view-projects">View projects</a>
+        </div>
+      <a onclick="history.back()" class="navigation">Back</a>
     </Header>
     <section class="window contact" >
       <div>
@@ -70,6 +72,6 @@ import '../../styles/normalise.css';
       </section>
     </section>
     <Footer/>
-  </div>
+  </container>
 </body>
 </html>
