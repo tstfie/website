@@ -83,7 +83,7 @@ function formatDate(dateString: string) {
             </header>
             <section class="log-entry-content">
               <p><span class="h4">{entry.heading}</span><br/>{entry.paragraph}</p>
-              <img src={urlForImage(entry.image).width(1200).url()} class="project-cover audit">
+              <img src={urlForImage(entry.image).width(1200).url()} class="project-cover audit" loading="lazy">
             </section>
           </article>
         ))}
@@ -93,7 +93,7 @@ function formatDate(dateString: string) {
 	<Footer/>
   </container>
   {/*// Audit Log Animation //*/}
-<script is:inline>
+<script is:inline async="false">
   document.addEventListener('DOMContentLoaded', () => {
     const entries = document.querySelectorAll('.audit-log-entry');
 
