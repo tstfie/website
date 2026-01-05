@@ -38,15 +38,12 @@
 }
 
 .padding {
-  column-gap: 140px;
-  row-gap: 140px;
-  flex-flow: column;
-  max-width: none;
-  min-height: 100dvh;
-  margin-left: 0;
-  margin-right: 0;
-  padding: 32px 64px 64px;
   display: flex;
+  row-gap: 140px;
+  padding: 32px 64px 64px;
+  min-height: 100vh;
+  flex-flow: column;
+  justify-content: flex-start;
 }
 
 .audit-log {
@@ -96,8 +93,8 @@
 }
 
 .log-entry-content {
-  column-gap: 12px;
-  row-gap: 12px;
+  column-gap: 16px;
+  row-gap: 16px;
   flex-flow: column;
   justify-content: flex-start;
   align-items: flex-start;
@@ -231,8 +228,8 @@
   width: 400px;
   max-width: none;
   height: auto;
-  margin-bottom: 8px;
   display: block;
+  margin:0;
 }
 
 .project-cover.audit {
@@ -550,6 +547,7 @@
 }
 
 .footer {
+  margin-bottom:-140px; /*/subtracting 'column-gap' from .padding class//*/
   column-gap: 6px;
   row-gap: 6px;
   flex-flow: column;
@@ -628,6 +626,10 @@
     row-gap: 128px;
     padding-left: 32px;
     padding-right: 32px;
+  }
+
+  .footer {
+    margin-bottom: -128px; /*/subtracting 'column-gap' from .padding class//*/
   }
 
   .log-entry-preview {

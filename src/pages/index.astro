@@ -22,24 +22,81 @@ const entry = await sanityClient.fetch<{
   releaseDate: string;
   title: string;
   heading: string;
-  paragraph: string;
-  image: Image;
-  link: URL;
-  linkTitle: string;
+  paragraph?: string;
+  image?: Image;
+  link?: string;
+  linkTitle?: string;
 }[]>(`
-  *[_type == "audit"] | order(releaseDate desc) {
-    releaseDate,
-    title,
-    heading,
+  *[_type == "audit"] | order(
+    coalesce(work->releaseDate, releaseDate) desc
+  ) {
+    // Release date
+    "releaseDate": coalesce(
+      releaseDate,
+      work->releaseDate
+    ),
+
+    // Preview title
+    "title": coalesce(
+      title,
+      work->title
+    ),
+
+    // Opened-state heading
+    "heading": coalesce(
+      heading,
+      work->type
+    ),
+
+    // Manual-only description
     paragraph,
-    image,
-    link,
-    linkTitle
+
+    // Cover image
+    "image": coalesce(
+      image,
+      work->cover
+    ),
+
+    // Correct production URL
+    "link": coalesce(
+      select(
+        // MUSIC (anything that != collection)
+        work->type != "Collection" =>
+          "/music/" + work->slug.current,
+
+        // COLLECTIONS — routed by release window
+        work->type == "Collection" &&
+        work->releaseDate >= "2023-06-01" &&
+        work->releaseDate <= "2024-05-31" =>
+          "/designs/23-24/" + work->slug.current,
+
+        work->type == "Collection" &&
+        work->releaseDate >= "2024-06-01" &&
+        work->releaseDate <= "2025-05-31" =>
+          "/designs/24-25/" + work->slug.current,
+
+        work->type == "Collection" &&
+        work->releaseDate >= "2025-06-01" &&
+        work->releaseDate <= "2026-05-31" =>
+          "/designs/25-26/" + work->slug.current
+      ),
+      link
+    ),
+
+    "linkTitle": coalesce(
+      linkTitle,
+      select(
+        work->type == "Collection" =>
+          "view collection",
+        work->type != "Collection" =>
+          null,
+      ),
+      )
   }
 `);
 
 // ------------------------------
-// Optional: format release date
+// format release date
 // ------------------------------
 function formatDate(dateString: string) {
   const date = new Date(dateString);
@@ -80,7 +137,7 @@ function formatDate(dateString: string) {
               <h3><span class="link">{entry.title}</span></h3>
             </header>
             <section class="log-entry-content" style="text-decoration:none">
-              <p><span class="h4">{entry.heading}</span><br/>{entry.paragraph}</p>
+              <p><span class="h4">{entry.heading}</span>{entry.paragraph && (<><br/>{entry.paragraph}</>)}</p>
               {entry.image && (
                 <img
                   src={urlForImage(entry.image).width(1200).url()}
@@ -88,7 +145,7 @@ function formatDate(dateString: string) {
                   loading="lazy"
                 />
               )}
-              {entry.link && (
+              {entry.linkTitle && (
                 <a href={entry.link} class="cta" style="margin-top:-8px;"><h5>{entry.linkTitle}</h5></a>
               )}
             </section>

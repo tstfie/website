@@ -196,30 +196,36 @@ function toISODuration(input?: string) {
 
     <section class="window music">
       <main>
-        <div>
+        <div class="vflex" style="row-gap:8px">
           <img src={urlForImage(project.cover).width(1200).url()} loading="lazy" alt="" class="project-cover"/>
-          <h1>{project.title}</h1>
-          <p class="meta">
-            {formatDate(project.releaseDate)} — {project.lengthDisplay}
-          </p>
+          <div>
+            <h1>{project.title}</h1>
+            <p class="meta">
+              {formatDate(project.releaseDate)} — {project.lengthDisplay}
+            </p>
+          </div>
         </div>
       </main>
 
       <section>
         <div class="interaction-wrapper h4 stream-group">
-          <a class="cta primary dropdown stream-trigger">Stream</a>
+          {project.links?.streaming && (
+            <>
+              <a class="cta primary dropdown stream-trigger">Stream</a>
 
-          {project.links?.streaming?.map((service, index) => (
-            <a
-              href={service.url}
-              class={`cta primary dropdown option ${String.fromCharCode(97 + index)}`}
-              data-stream-option
-              target="_blank"
-              rel="noopener"
-            >
-              {service.label}
-            </a>
-          ))}
+              {project.links.streaming.map((service, index) => (
+                <a
+                  href={service.url}
+                  class={`cta primary dropdown option ${String.fromCharCode(97 + index)}`}
+                  data-stream-option
+                  target="_blank"
+                  rel="noopener"
+                >
+                  {service.label}
+                </a>
+              ))}
+            </>
+          )}
 
           {project.links?.download && (
             <a href={project.links.download} class="cta download">Download</a>
