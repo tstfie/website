@@ -86,10 +86,9 @@ const entry = await sanityClient.fetch<{
     "linkTitle": coalesce(
       linkTitle,
       select(
-        work->type == "Collection" =>
-          "view collection",
-        work->type != "Collection" =>
-          null,
+        work->type == "Collection" => "View collection",
+        work->type in ["Mixtape", "EP", "Single"] => "View project",
+        true => null,
       ),
       )
   }
