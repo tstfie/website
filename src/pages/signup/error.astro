@@ -6,6 +6,20 @@ import Footer from '../../layouts/footer.astro';
 import '../../styles/global.css';
 import '../../styles/base.css';
 import '../../styles/normalise.css';
+
+const code = Astro.url.searchParams.get("code");
+
+const messages: Record<string, string> = {
+  email_required: "Email is required.",
+  invalid_email: "The email address is invalid.",
+  name_too_long: "Name is too long.",
+  message_too_long: "Message exceeds the allowed length.",
+  no_interest: "Select at least one interest.",
+  brevo_failed: "Unable to process signup. Try again later.",
+  server_error: "An unexpected error occurred.",
+};
+
+const message = messages[code ?? ""] ?? "Something went wrong.";
 ---
 <html lang="en">
 
@@ -24,9 +38,9 @@ import '../../styles/normalise.css';
         <h1>Sign up</h1>
         <p>Receive updates</p>
       <section class="contact-section">
-        <h3>Successfully signed up.</h3>
-        <p>You will shortly receive an email asking you to confirm your subscription.</p>
-        <a href="/" class="cta primary"><h4>Home</h4></a>
+        <h3>Something went wrong.</h3>
+        <p>{message}</p>
+        <a href="/signup" class="cta primary"><h4>Try again</h4></a>
       </section>
     <div>
     </div>

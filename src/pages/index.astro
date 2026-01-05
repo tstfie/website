@@ -128,29 +128,21 @@ function formatDate(dateString: string) {
     </Header>
 	{/*// Main content //*/}
     <section class="window">
-      <div class="audit-log" id="projects">
+      <main class="audit-log" id="projects">
         {entry.map((entry) => (
           <article class="audit-log-entry" data-open="false">
             <header class="log-entry-preview">
               <p class="meta number">{formatDate(entry.releaseDate)}</p>
               <h3><span class="link">{entry.title}</span></h3>
             </header>
-            <section class="log-entry-content" style="text-decoration:none">
-              <p><span class="h4">{entry.heading}</span>{entry.paragraph && (<><br/>{entry.paragraph}</>)}</p>
-              {entry.image && (
-                <img
-                  src={urlForImage(entry.image).width(1200).url()}
-                  class="project-cover audit"
-                  loading="lazy"
-                />
-              )}
-              {entry.linkTitle && (
-                <a href={entry.link} class="cta" style="margin-top:-8px;"><h5>{entry.linkTitle}</h5></a>
-              )}
+            <section class="log-entry-content">
+                <p><span class="h4">{entry.heading}</span>{entry.paragraph && (<><br/>{entry.paragraph}</>)}</p>
+              {entry.image && (<img src={urlForImage(entry.image).width(1200).url()} class="project-cover audit" loading="lazy"/>)}
+              {entry.linkTitle && (<a href={entry.link} class="cta" style="margin-top:-8px;"><h5>{entry.linkTitle}</h5></a>)}
             </section>
           </article>
         ))}
-      </div>
+      </main>
     </section>
 	{/*// Footer component //*/}
 	<Footer/>

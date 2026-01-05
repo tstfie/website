@@ -1,6 +1,38 @@
 export const prerender = false;
 import type { APIRoute } from "astro";
 
+/* ================================
+   Helpers
+================================= */
+
+function jsonError(code: string, status = 400) {
+  return new Response(
+    JSON.stringify({ error: code }),
+    {
+      status,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+}
+
+function jsonSuccess(data: Record<string, unknown> = {}) {
+  return new Response(
+    JSON.stringify({ success: true, ...data }),
+    {
+      status: 200,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+}
+
+/* ================================
+   POST handler
+================================= */
+
 export const POST: APIRoute = async ({ request }) => {
   try {
     const formData = await request.formData();
@@ -10,8 +42,8 @@ export const POST: APIRoute = async ({ request }) => {
     ================================= */
     const honeypot = formData.get("company");
     if (honeypot && String(honeypot).length > 0) {
-      // Silently succeed to avoid bot feedback loops
-      return new Response(null, { status: 204 });
+      // Silent success to avoid bot feedback
+      return jsonSuccess();
     }
 
     /* ================================
@@ -23,48 +55,49 @@ export const POST: APIRoute = async ({ request }) => {
     const message = String(formData.get("message") || "").trim();
 
     /* ================================
-       Server-side validation
+       Validation
     ================================= */
     if (!email) {
-      return new Response("Email is required", { status: 400 });
+      return jsonError("email_required");
     }
 
-    // Minimal email sanity check (do not overdo regex)
     if (!email.includes("@") || email.length > 254) {
-      return new Response("Invalid email", { status: 400 });
+      return jsonError("invalid_email");
     }
 
     if (firstName.length > 100 || lastName.length > 100) {
-      return new Response("Name too long", { status: 400 });
+      return jsonError("name_too_long");
     }
 
     if (message.length > 2000) {
-      return new Response("Message too long", { status: 400 });
+      return jsonError("message_too_long");
     }
 
     /* ================================
-       Send to Brevo (Contacts API)
+       Interests → Brevo lists
     ================================= */
+    const LIST_MAP: Record<string, number[]> = {
+      designs: [8],
+      music: [9],
+      other: [10],
+    };
 
-const LIST_MAP: Record<string, number[]> = {
-  designs: [8],
-  music: [9],
-  other: [10],
-};
+    const interests = formData
+      .getAll("interest")
+      .map(v => String(v))
+      .filter(v => v in LIST_MAP);
 
-const interests = formData
-  .getAll("interest")
-  .map(v => String(v))
-  .filter(v => v in LIST_MAP);
+    if (interests.length === 0) {
+      return jsonError("no_interest");
+    }
 
-if (interests.length === 0) {
-  return new Response("Select at least one interest", { status: 400 });
-}
+    const listIds = [
+      ...new Set(interests.flatMap(i => LIST_MAP[i])),
+    ];
 
-const listIds = [...new Set(
-  interests.flatMap(i => LIST_MAP[i])
-)];
-
+    /* ================================
+       Brevo request
+    ================================= */
     const brevoRes = await fetch(
       "https://api.brevo.com/v3/contacts/doubleOptinConfirmation",
       {
@@ -81,38 +114,28 @@ const listIds = [...new Set(
             MESSAGE: message || undefined,
             DOI_STATUS: "PENDING",
           },
-
-          includeListIds: listIds,          // lists are added after confirmation
-          templateId: 1,                  // DOI template ID
+          includeListIds: listIds,
+          templateId: 1,
           redirectionUrl: "https://tstfie.ch/signup/success",
-
         }),
       }
     );
 
     if (!brevoRes.ok) {
-    const text = await brevoRes.text();
-    console.error("Brevo status:", brevoRes.status);
-    console.error("Brevo body:", text);
-      return new Response("Failed to submit form", { status: 500 });
+      const text = await brevoRes.text();
+      console.error("Brevo status:", brevoRes.status);
+      console.error("Brevo body:", text);
+
+      return jsonError("brevo_failed", 500);
     }
 
     /* ================================
-       Redirect on success
+       Success
     ================================= */
-    return new Response(null, {
-      status: 303,
-      headers: {
-        Location: "/signup/success",
-      },
-    });
-    } catch (err) {
-      console.error("Contact API error:", err);
+    return jsonSuccess();
 
-      return new Response(
-        err instanceof Error ? err.message : String(err),
-        { status: 500 }
-      );
-    }
-}
-;
+  } catch (err) {
+    console.error("Signup API error:", err);
+    return jsonError("server_error", 500);
+  }
+};

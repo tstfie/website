@@ -7,10 +7,10 @@ import '../../styles/global.css';
 import '../../styles/base.css';
 import '../../styles/normalise.css';
 ---
-<html>
+<html lang="en">
 
 <Head
-  title="tstfie | Sign Up"
+  title="tstfie | Sign up"
    description="Sign up for the newsletter."
    canonical="https://www.tstfie.ch/signup"
 />
@@ -26,15 +26,10 @@ import '../../styles/normalise.css';
         <h1>Sign up</h1>
         <p>Receive updates</p>
       <section class="contact-section">
-        <div class="form-block">
+        <main class="form-block">
           <form
             id="email-form"
-            name="email-form"
-            data-name="Email Form"
-            action="api/signup"
             method="post"
-            enctype="multipart/form-data"
-            data-astro-reload="true"
             class="fields-wrapper form">
             <div class="div-block">
               <div>
@@ -53,23 +48,43 @@ import '../../styles/normalise.css';
               <label for="interest"><h5>get notified for..<span class="asterisk">*</span></h5></label>
               <div class="hflex" style="column-gap:12px">
                 <div class="hflex" style="flex-flow:row-reverse; align-items:center;">
-                  <label><h5>Designs</h5></label><input type="checkbox" name="interest" value="designs" class="input-field checkbox" />
+                  <label for="designs"><h5>Designs</h5></label><input type="checkbox" id="designs" name="interest" value="designs" class="input-field checkbox" />
                 </div>
                 <div class="hflex" style="flex-flow:row-reverse; align-items:center;">
-                  <label><h5>Music</h5></label><input type="checkbox" name="interest" value="music" class="input-field checkbox" />
+                  <label for="music"><h5>Music</h5></label><input type="checkbox" id="music" name="interest" value="music" class="input-field checkbox" />
                 </div>
                 <div class="hflex" style="flex-flow:row-reverse; align-items:center;">
-                  <label><h5>Other</h5></label><input type="checkbox" name="interest" value="other" class="input-field checkbox" />
+                  <label for="other"><h5>Other</h5></label><input type="checkbox" id="other" name="interest" value="other" class="input-field checkbox" />
                 </div>
             </div>
             <div class="interaction-wrapper" style="margin-top:12px;">
               <button type="submit" class="cta primary"><h4>Submit</h4></button>
             </div>
           </form>
-        </div>
+        </main>
       </section>
     </section>
     <Footer/>
   </container>
+  <script type="module">
+    const form = document.getElementById("email-form");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const res = await fetch("/api/signup", {
+        method: "POST",
+        body: new FormData(form),
+      });
+
+      if (!res.ok) {
+        const { error } = await res.json();
+        window.location.href = `/signup/error?code=${error}`;
+        return;
+      }
+
+      window.location.href = "/signup/confirm";
+    });
+  </script>
 </body>
 </html>

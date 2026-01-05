@@ -60,7 +60,6 @@
   row-gap: 12px;
   flex-flow: column;
   display: flex;
-  cursor: pointer;
 }
 
 .form-block {
@@ -93,7 +92,6 @@
 }
 
 .log-entry-content {
-  column-gap: 16px;
   row-gap: 16px;
   flex-flow: column;
   justify-content: flex-start;
@@ -310,7 +308,7 @@
 
 .cta.primary {
   backdrop-filter: invert(88%) blur(.8px);
-  color: #d8d8d8;
+  color: #ededed;
 }
 
 .cta.primary:hover {
@@ -390,10 +388,10 @@
   justify-content: center;
   align-items: center;
   max-width: none;
+  height:100vh;
   margin: 0px;
-  margin-bottom: 140px;
   display: flex;
-  position: fixed;
+  position: relative;
   inset: 0%;
 }
 
