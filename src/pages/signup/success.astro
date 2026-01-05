@@ -18,7 +18,7 @@ import '../../styles/normalise.css';
   <container class="padding">
     <Header>
       <a href="/#projects" class="navigation">View projects</a>
-      <a onclick="history.back()" class="navigation">Back</a>
+      <a href="../" onclick="event.preventDefault(); history.back();" class="navigation">Back</a>
     </Header>
     <section class="window contact">
         <h1>Sign up</h1>

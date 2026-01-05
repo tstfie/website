@@ -48,7 +48,7 @@ return `${month} ${day}${ordinal}, ${year}`;
   <div class="padding">
     <Header>
         <a href="/" class="navigation">Home</a>
-        <a onclick="history.back()" class="navigation">Back</a>
+        <a href="/" onclick="event.preventDefault(); history.back();" class="navigation">Back</a>
     </Header>
     <section class="window">
           <main class="vflex centered" style="row-gap:12px; flex-direction:column-reverse;">

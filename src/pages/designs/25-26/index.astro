@@ -47,7 +47,7 @@ return `${month} ${day}${ordinal}, ${year}`;
   <container class="padding">
     <Header>
         <a href="/" class="navigation">Home</a>
-        <a onclick="history.back()" class="navigation">Back</a>
+        <a href="/" onclick="event.preventDefault(); history.back();" class="navigation">Back</a>
     </Header>
     <section class="window">
       <h1>25-26</h1>

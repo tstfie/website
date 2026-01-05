@@ -21,7 +21,7 @@ import Footer from '../layouts/footer.astro';
       <div class="projects-nav">
         <a href="/?projects=open" class="navigation view-projects">View projects</a>
         </div>
-      <a href="/signup" class="navigation">Sign up</a>
+      <a href="/" onclick="event.preventDefault(); history.back();" class="navigation">Back</a>
     </Header>
 
 	{/*// Main content //*/}
