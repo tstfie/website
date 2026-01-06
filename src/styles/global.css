@@ -683,6 +683,13 @@
     font-size: 24px;
     line-height: 24px;
   }
+
+  .collection-scroll {
+    column-gap: 200px;
+    row-gap: 200px;
+  }
+
+
 }
 
 @media screen and (max-width: 479px) {
@@ -698,6 +705,11 @@
 
   .collection-header {
     display: none;
+  }
+
+  .collection-scroll {
+    column-gap: 128px;
+    row-gap: 128px;
   }
 
   .hero {

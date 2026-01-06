@@ -21,10 +21,13 @@ import Header from '../../layouts/header.astro';
 	{/*// Header //*/}
     <Header>
       <div class="projects-nav">
-        <a href="23-24/" class="navigation">23-24</a>
-        <a href="24-25/" class="navigation">24-25</a>
-        <a href="25-26/" class="navigation">25-26</a>
+        <a href="/?projects=open" class="navigation view-projects">View projects</a>
         </div>
+      <div class="hflex" style="column-gap:12px;">
+        <a href="./23-24" class="navigation">23-24</a>
+        <a href="./24-25" class="navigation">24-25</a>
+        <a href="./25-26" class="navigation">25-26</a>
+      </div>
       <a href="/" onclick="event.preventDefault(); history.back();" class="navigation">Back</a>
     </Header>
 
