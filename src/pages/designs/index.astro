@@ -1,19 +1,36 @@
 ---
-export const prerender = true;
+import "../styles/base.css"
+import "../styles/global.css"
+import "../styles/normalise.css"
 
-import "../../styles/base.css"
-import "../../styles/global.css"
-import "../../styles/normalise.css"
-
+import Header from '../../layouts/header.astro';
 import Head from '../../layouts/head.astro';
-
+import Footer from '../../layouts/footer.astro';
 ---
 
 <html lang="en">
-	<head>
-		<Head />
-	</head>
-	<body>
-		<h2>redirecting to latest project</h2>
-	</body>
+<Head
+    title="tstfie"
+    description="Sneaker designs by Niklay"
+    canonical="https://www.tstfie.ch/designs/"
+/>
+<body>
+  <container class="padding">
+	{/*// Header //*/}
+    <Header>
+      <div class="projects-nav">
+        <a href="/?projects=open" class="navigation view-projects">View projects</a>
+        </div>
+      <a href="/" onclick="event.preventDefault(); history.back();" class="navigation">Back</a>
+    </Header>
+
+	{/*// Main content //*/}
+    <section class="window contact">
+        <h1>Designs</h1>
+        <p>Sneaker designs are two-dimensional posters with a conceptual sneaker design as their point of interest. Names and themes are chosen to reflect underlying concepts, providing a narrative context.<br/>The goal is to create storylines with connected designs, through intentional curation and use of context to convey narratives.Each collection is titled and themed to speak as much through its structure and tracklisting as through its content.<br/>The “23-24” cycle (Achtklassarbeit) includes works from mid-2023 to mid-2024, followed by “24-25” and “25-26” following the same logic.</p>
+    </section>
+	{/*// Footer component //*/}
+	<Footer/>
+  </container>
+</body>
 </html>
