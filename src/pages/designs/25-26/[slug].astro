@@ -93,6 +93,9 @@ function formatDate(dateString: string) {
 }
 
 const pageTitle = collection.title
+
+const img = (image: any, w: number, q = 80) =>
+  urlForImage(image).width(w).format('webp').quality(q).url();
 ---
 <html lang="en">
 <Head
@@ -138,19 +141,30 @@ const pageTitle = collection.title
         </section>
       </header>
       <div class="hflex">
-        <section class="collection-scroll">
+        <main class="collection-scroll">
           {collection.tracklists?.map((list) => (
             <>
               {list.tracks.map((track) => (
                 <section class="design-wrapper" key={track.order}>
                   <div class="title">{track.title}</div>
-                  <img src={urlForImage(track.designImage).width(1200).format('webp').quality(85).url()} class="sneaker-design" alt="" sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 939.984375px"
+                  <img
+                    src={img(track.designImage, 939)}
+                    class="sneaker-design"
+                    srcset={`
+                      ${img(track.designImage, 480, 70)} 480w,
+                      ${img(track.designImage, 768, 75)} 768w,
+                      ${img(track.designImage, 939, 80)} 939w,
+                      ${img(track.designImage, 1200, 80)} 1200w
+                    `}
+                    fetchpriority="high"
+                    width="939"
+                    height="1302"
                   />
                 </section>
               ))}
             </>
           ))}
-        </section>
+        </main>
 
         <div class="collection-tracklist">
           {collection.tracklists?.map((list) =>

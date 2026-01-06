@@ -47,11 +47,11 @@ return `${month} ${day}${ordinal}, ${year}`;
   <container class="padding">
     <Header>
         <a href="/" class="navigation">Home</a>
-        <a href="/" onclick="event.preventDefault(); history.back();" class="navigation">Back</a>
+        <a href="./" onclick="event.preventDefault(); history.back();" class="navigation">Back</a>
     </Header>
     <section class="window">
       <h1>25-26</h1>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed at turpis gravida, rhoncus augue in, finibus dui. </p>
+      <p>Beginning with Periapsis, the 25-26 cycle was established during the release-cycle of its first project. Both coincided with a structural shift of the website, following the "Apogee" period in May and June 2025.</p>
       <div class="tracklist">
         <div class="audit-log">
             {collections.map((collection: { slug: { current: any; }; title: unknown; releaseDate: string; length: unknown; }) => (
