@@ -378,10 +378,12 @@
   font-size: 24px;
   line-height: 28px;
   display: flex;
+  line-break:strict;
 }
 
 .track-title {
   margin-right: auto;
+  overflow:hidden;
 }
 
 .centered-element-wrap {
@@ -732,9 +734,10 @@
     gap: 12px;
   }
 
-  .meta.number {
-  font-size: 12px;
+  .meta {
+    font-size:14px;
   }
+
   .interaction-wrapper.credits {
     column-gap: 2px;
     row-gap: 2px;
