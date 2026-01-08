@@ -546,7 +546,7 @@
 }
 
 .footer {
-  margin-bottom:-140px; /*/subtracting 'column-gap' from .padding class//*/
+  margin-bottom:-140px; /*/subtracting 'row-gap' from .padding class//*/
   column-gap: 6px;
   row-gap: 6px;
   flex-flow: column;
@@ -627,7 +627,7 @@
   }
 
   .footer {
-    margin-bottom: -128px; /*/subtracting 'column-gap' from .padding class//*/
+    margin-bottom: -128px; /*/subtracting 'row-gap' from .padding class//*/
   }
 
   .log-entry-preview {
