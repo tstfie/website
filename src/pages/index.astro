@@ -136,9 +136,9 @@ function formatDate(dateString: string) {
               <h3><span class="link">{entry.title}</span></h3>
             </header>
             <section class="log-entry-content">
-                <p><span class="h4">{entry.heading}</span>{entry.paragraph && (<><br/>{entry.paragraph}</>)}</p>
+                <p>{entry.heading && (<span class="h4" style="margin-top:4px;">{entry.heading}</span><br/>)}{entry.paragraph && (<>{entry.paragraph}</>)}</p>
               {entry.image && (<img src={urlForImage(entry.image).width(1200).url()} class="project-cover audit" loading="lazy"/>)}
-              {entry.linkTitle && (<a href={entry.link} class="cta" style="margin-top:-8px;"><h5>{entry.linkTitle}</h5></a>)}
+              {entry.linkTitle && (<a href={entry.link} class="cta" style="margin-top:-4px;"><h5>{entry.linkTitle}</h5></a>)}
             </section>
           </article>
         ))}
