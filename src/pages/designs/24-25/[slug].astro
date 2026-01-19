@@ -95,6 +95,28 @@ const pageTitle = collection.title
 
 const img = (image: any, w: number, q = 80) =>
   urlForImage(image).width(w).format('webp').quality(q).url();
+
+// Define JSON-LD Content
+const designSchema = {
+  "@context": "https://schema.org",
+  "@type": "Collection",
+  "name": collection.title ?? "",
+  "url": `https://www.tstfie.ch/designs/24-25/${collection.slug?.current ?? ""}`,
+  "datePublished": collection.releaseDate ?? "",
+  "creator": { "@type": "Person", "name": "Niklay Wiborny" },
+  "numberOfItems": collection.tracklists?.reduce(
+    (acc, list) => acc + (list.tracks?.length ?? 0),
+    0
+  ) ?? 0,
+  "hasPart": collection.tracklists?.flatMap(list =>
+    list.tracks?.map((track, trackIndex) => ({
+      "@type": "VisualArtwork",
+      "name": track.title ?? "",
+      "position": trackIndex + 1,
+      "image": track.designImage ? urlForImage(track.designImage).width(1200).url() : ""
+    })) ?? []
+  ) ?? []
+};
 ---
 <html lang="en">
 <Head
@@ -103,25 +125,7 @@ const img = (image: any, w: number, q = 80) =>
   canonical={`https://www.tstfie.ch/designs/24-25/${collection.slug?.current ?? ""}`}
 />
 <script type="application/ld+json">
-{JSON.stringify({
-  "@context": "https://schema.org",
-  "@type": "Collection",
-  "name": collection.title,
-  "url": `https://tstfie.ch/designs/24-25/${collection.slug?.current}`,
-  "datePublished": collection.releaseDate,
-  "creator": { "@type": "Person", "name": "Niklay" },
-  "numberOfItems": collection.tracklists?.reduce(
-    (acc, list) => acc + (list.tracks?.length ?? 0), 0
-  ),
-  "hasPart": collection.tracklists?.flatMap(list =>
-    list.tracks.map(track => ({
-      "@type": "VisualArtwork",
-      "name": track.title,
-      "position": trackIndex,
-      "image": urlForImage(track.designImage).width(1200).url()
-    }))
-  )
-}, null, 2)}
+{JSON.stringify(designSchema)}
 </script>
 <body>
   <container class="padding">
