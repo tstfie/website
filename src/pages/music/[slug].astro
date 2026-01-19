@@ -98,7 +98,6 @@ slug: any;
       tracks[]->{
         title,
         duration,
-        order,
         artists[]->{ name }
       }
     }
@@ -176,7 +175,7 @@ function toISODuration(input?: string) {
   "duration": `PT${project.durationMinutes ?? 0}M${project.durationSeconds ?? 0}S`, // <-- comma here
   "track": project.tracklists?.[0]?.tracks?.map(track => ({
     "@type": "MusicRecording",
-    "position": track.order,
+    "position": trackIndex,
     "name": track.title,
     "byArtist": track.artists?.map(a => ({
       "@type": "Person",
@@ -186,7 +185,6 @@ function toISODuration(input?: string) {
   "sameAs": project.links?.streaming?.map(s => s.url)
 }, null, 2)}
 </script>
-
 
 <body>
   <container class="padding">
@@ -231,22 +229,37 @@ function toISODuration(input?: string) {
             <a href={project.links.download} class="cta download">Download</a>
           )}
         </div>
+        {project.tracklists.map((list, discIndex) => {
+          const discTitle = list.title || `Disc ${discIndex + 1}`
+          const hasMultipleDiscs = project.tracklists.length > 1
 
-        {project.tracklists.map(list => (
-          <div class="tracklist">
-            {list.title && <h3>{list.title}</h3>}
-            {list.tracks.map(track => (
-              <div class="track">
-                <div class="meta number" style="margin-left:4px">{track.order.toString().padStart(2, "0")}</div>
-                <div class="track-title">
-                  <div class="title">{track.title}</div>
-                  <div class="meta">{track.artists.map(a => a.name).join(", ")}</div>
-                </div>
-                <div class="meta number" style="margin-right:12px">{track.duration}</div>
-              </div>
-            ))}
-          </div>
-        ))}
+          return (
+            <div class="tracklist">
+              {hasMultipleDiscs && <h3>{discTitle}</h3>}
+
+              {list.tracks.map((track, trackIndex) => {
+                const trackNumber = (trackIndex + 1).toString().padStart(2, "0")
+
+                return (
+                  <div class="track">
+                    <div class="meta number" style="margin-left:4px">
+                      {trackNumber}
+                    </div>
+                    <div class="track-title">
+                      <div class="title">{track.title}</div>
+                      <div class="meta small">
+                        {track.artists.map(a => a.name).join(", ")}
+                      </div>
+                    </div>
+                    <div class="meta number" style="margin-right:12px">
+                      {track.duration}
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          )
+        })}
       </section>
 
       <section class="section">

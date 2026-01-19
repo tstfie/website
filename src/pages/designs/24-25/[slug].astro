@@ -46,7 +46,6 @@ const collection = await sanityClient.fetch<{
     tracks: {
       title: string;
       duration?: string;
-      order: number;
       artists?: { name: string }[];
       designImage: any;
     }[];
@@ -62,7 +61,6 @@ const collection = await sanityClient.fetch<{
       title,
       tracks[]->{
         title,
-        order,
         artists[]->{
           name
         },
@@ -119,7 +117,7 @@ const img = (image: any, w: number, q = 80) =>
     list.tracks.map(track => ({
       "@type": "VisualArtwork",
       "name": track.title,
-      "position": track.order,
+      "position": trackIndex,
       "image": urlForImage(track.designImage).width(1200).url()
     }))
   )
@@ -145,8 +143,8 @@ const img = (image: any, w: number, q = 80) =>
         <main class="collection-scroll">
           {collection.tracklists?.map((list) => (
             <>
-              {list.tracks.map((track) => (
-                <section class="design-wrapper" key={track.order}>
+              {list.tracks.map((track, trackIndex) => (
+                <section class="design-wrapper" key={trackIndex}>
                   <div class="title">{track.title}</div>
                   <img
                     src={img(track.designImage, 939)}
@@ -170,7 +168,7 @@ const img = (image: any, w: number, q = 80) =>
 
         <div class="collection-tracklist">
           {collection.tracklists?.map((list) =>
-            list.tracks.map((track) => <h3 style="line-height:120%" key={track.order}>{track.title}<br/></h3>)
+            list.tracks.map((track, trackIndex) => <h3 style="line-height:120%" key={trackIndex}>{track.title}<br/></h3>)
           )}
         </div>
       </div>
