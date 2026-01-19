@@ -1,7 +1,6 @@
 import { createClient } from "@sanity/client";
 import fs from "fs";
 import { resolveCanonicalUrl } from "../lib/resolveCanonicalUrl";
-import path from "path";
 
 const client = createClient({
   projectId: '366sb9yi',
@@ -10,8 +9,9 @@ const client = createClient({
     apiVersion: '2025-01-28',
 });
 
+// Fetch all works that are published and have a slug
 const works = await client.fetch(`
-  *[_type == "work" && defined(aliases)]{
+  *[_type == "work" && defined(slug.current)]{
     "slug": slug.current,
     type,
     releaseDate,
@@ -19,23 +19,40 @@ const works = await client.fetch(`
   }
 `);
 
-const redirects = [];
+// Sort descending by releaseDate
+const sortedWorks = works
+  .filter((w: { releaseDate: any; }) => w.releaseDate)
+  .sort((a: { releaseDate: string | number | Date; }, b: { releaseDate: string | number | Date; }) => new Date(b.releaseDate).getTime() - new Date(a.releaseDate).getTime());
 
+// Pick the latest
+const latest = sortedWorks[0];
+if (!latest) throw new Error("No works found to assign /latest alias");
+
+const redirects: any[] = [];
+
+// Add all normal aliases
 for (const work of works) {
-  const destination = resolveCanonicalUrl(work);
-
-  for (const source of work.aliases) {
-    redirects.push({
-      source,
-      destination,
-      permanent: true,
-    });
+  const canonical = resolveCanonicalUrl(work);
+  if (work.aliases?.length) {
+    for (const alias of work.aliases) {
+      redirects.push({
+        source: alias,
+        destination: canonical,
+        permanent: true,
+      });
+    }
   }
 }
 
-const vercelConfig = {
-  redirects,
-};
+// Add the /latest redirect
+redirects.push({
+  source: "/latest",
+  destination: resolveCanonicalUrl(latest),
+  permanent: true,
+});
 
-const rootPath = path.resolve(process.cwd(), "vercel.json");
-fs.writeFileSync(rootPath, JSON.stringify(vercelConfig, null, 2));
+// Write vercel.json
+const vercelConfig = { redirects };
+fs.writeFileSync("vercel.json", JSON.stringify(vercelConfig, null, 2));
+
+console.log("Redirects generated including /latest →", resolveCanonicalUrl(latest));
