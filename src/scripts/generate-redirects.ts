@@ -1,6 +1,7 @@
 import { createClient } from "@sanity/client";
 import fs from "fs";
 import { resolveCanonicalUrl } from "../lib/resolveCanonicalUrl";
+import path from "path";
 
 const client = createClient({
   projectId: '366sb9yi',
@@ -36,7 +37,5 @@ const vercelConfig = {
   redirects,
 };
 
-fs.writeFileSync(
-  "vercel.json",
-  JSON.stringify(vercelConfig, null, 2)
-);
+const rootPath = path.resolve(process.cwd(), "vercel.json");
+fs.writeFileSync(rootPath, JSON.stringify(vercelConfig, null, 2));
