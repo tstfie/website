@@ -124,8 +124,10 @@ const designSchema = {
   description={`Collection by Niklay`}
   canonical={`https://www.tstfie.ch/designs/24-25/${collection.slug?.current ?? ""}`}
 />
-<script type="application/ld+json">
-{JSON.stringify(designSchema)}
+<script
+  type="application/ld+json"
+  set:html={JSON.stringify(designSchema)}
+>
 </script>
 <body>
   <container class="padding">

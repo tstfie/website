@@ -173,13 +173,15 @@ const musicSchema = {
 
 <html lang="en">
 <Head
-  title={`${project.title} | tstfie`}
+  title={`${project.title}`}
   description={`${project.type} by Niklay — ${formatDate(project.releaseDate)}`}
   canonical={`https://tstfie.ch/${project.slug?.current}`}
 />
 
-<script type="application/ld+json">
-{JSON.stringify(musicSchema)}
+<script
+  type="application/ld+json"
+  set:html={JSON.stringify(musicSchema)}
+>
 </script>
 
 <body>

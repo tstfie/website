@@ -102,7 +102,7 @@ const designSchema = {
   "name": collection.title ?? "",
   "url": `https://www.tstfie.ch/designs/23-24/${collection.slug?.current ?? ""}`,
   "datePublished": collection.releaseDate ?? "",
-  "creator": { "@type": "Person", "name": "Niklay Wiborny" },
+  "creator": { "@type": "Person", "name": "Niklay" },
   "numberOfItems": collection.tracklists?.reduce(
     (acc, list) => acc + (list.tracks?.length ?? 0),
     0
@@ -123,8 +123,10 @@ const designSchema = {
   description={`Collection by Niklay`}
   canonical={`https://www.tstfie.ch/designs/23-24/${collection.slug?.current ?? ""}`}
 />
-<script type="application/ld+json">
-{JSON.stringify(designSchema)}
+<script
+  type="application/ld+json"
+  set:html={JSON.stringify(designSchema)}
+>
 </script>
 <body>
   <container class="padding">
