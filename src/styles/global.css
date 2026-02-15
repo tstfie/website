@@ -47,19 +47,21 @@
 }
 
 .audit-log {
-  column-gap: 60px;
-  row-gap: 60px;
-  flex-flow: column;
+  gap: 64px;
+  flex-direction: column;
   max-width: 100%;
   margin-left: 0;
   display: flex;
 }
 
 .audit-log-entry {
-  column-gap: 12px;
-  row-gap: 12px;
-  flex-flow: column;
+  gap: 20px;
+  flex-direction: column;
   display: flex;
+}
+
+.audit-log a {
+  text-decoration: none;
 }
 
 .form-block {
@@ -72,8 +74,7 @@
 }
 
 .log-entry-preview {
-  column-gap: 16px;
-  row-gap: 16px;
+  gap: 24px;
   flex-flow: row;
   justify-content: flex-start;
   align-items: baseline;
@@ -100,7 +101,7 @@
   margin-top: 4px;
   margin-left: 0;
   font-size: 24px;
-  line-height: 24px;
+  line-height: 1.5px;
   transition: max-height 0.4s ease, opacity 0.2s ease;
   display: none;
 }
@@ -231,7 +232,8 @@
 }
 
 .project-cover.audit {
-  width: 340px;
+  width: 100%;
+  max-width: 440px;
   height: auto;
 }
 
@@ -252,13 +254,13 @@
   cursor: pointer;
   background-color: #0000;
   border: 1px solid #000;
-  border-radius: 20px;
+  border-radius: 999px;
   grid-template-rows: auto auto;
   grid-template-columns: 1fr 1fr;
   grid-auto-columns: 1fr;
   justify-content: center;
   align-items: center;
-  padding: 4px 12px;
+  padding: 4px 16px;
   text-decoration: none;
   display: inline-flex;
 }
@@ -696,6 +698,87 @@
 }
 
 @media screen and (max-width: 479px) {
+  .window.music {
+    margin-top: -64px;
+    gap: 20px;
+  }
+
+  .window.music > main,
+  .window.music > section {
+    gap: 24px;
+  }
+
+  /* --- HERO BLOCK --- */
+
+  .music-hero {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .project-cover {
+    width: 72vw;
+  }
+
+  .window.music h1 {
+    font-size: 32px;
+    line-height: 1.1;
+    margin-top: 8px;
+  }
+
+  .window.music .meta {
+    font-size: 14px;
+    line-height: 1.4;
+    opacity: 0.75;
+  }
+
+  /* --- STREAM / DOWNLOAD BUTTONS --- */
+
+  .interaction-wrapper.stream-group {
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .cta {
+    padding: 8px 16px;
+    font-size: 18px;
+    border-radius: 24px;
+  }
+
+  /* --- TRACKLIST --- */
+
+  .tracklist {
+    margin-top: 32px;
+    gap: 12px;
+  }
+
+  .track {
+    padding: 12px 0;
+    font-size: 20px;
+    line-height: 1.4;
+    gap: 4px;
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+  }
+
+  .track .meta.number {
+    font-size: 14px;
+    opacity: 0.6;
+    min-width: 28px;
+  }
+
+  .track > .meta.number:last-child {
+    font-size: 14px;
+    opacity: 0.6;
+  }
+
+  /* --- META SECTION AT BOTTOM --- */
+
+  .project-meta-wrapper {
+    flex-flow: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
   .padding {
     padding-left: 20px;
     padding-right: 20px;
@@ -718,10 +801,6 @@
   .hero {
     font-size: 28px;
     line-height: 28px;
-  }
-
-  .project-cover {
-    width: 72vw;
   }
 
   .project-cover.audit {
