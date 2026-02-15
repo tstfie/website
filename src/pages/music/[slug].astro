@@ -276,10 +276,7 @@ const musicSchema = {
           ) && (
             <div class="interaction-wrapper h5 additional">
               {project.archiveRole === "additional" ? (
-                <a
-                  class="cta"
-                  href={`/music/${project.parentWork.slug.current}`}
-                >
+                <a class="cta" href={`/music/${project.parentWork.slug.current}`}>
                   Additional release
                 </a>
               ) : (
