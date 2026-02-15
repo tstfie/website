@@ -140,8 +140,30 @@
 }
 
 .window.music {
-  column-gap: 32px;
-  row-gap: 32px;
+    max-width: 1100px;
+    width: 100%;
+    gap: 32px;
+}
+
+.window.music h1 {
+    font-size: 40px;
+    line-height: 1.1;
+}
+
+  .window.music .meta {
+    line-height: 1.4;
+    opacity: 0.75;
+}
+
+.window.music > main,
+.window.music > section {
+    max-width: 640px;
+}
+
+.music-hero {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
 
 .div-block {
@@ -223,12 +245,10 @@
 }
 
 .project-cover {
-  border-radius: 4px;
-  width: 400px;
-  max-width: none;
-  height: auto;
-  display: block;
-  margin:0;
+    width: 100%;
+    max-width: 420px;
+    border-radius: 8px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.08);
 }
 
 .project-cover.audit {
@@ -361,8 +381,7 @@
 }
 
 .tracklist {
-  column-gap: 12px;
-  row-gap: 12px;
+  gap: 0;
   flex-flow: column;
   width: 100%;
   margin-top: 16px;
@@ -370,17 +389,30 @@
 }
 
 .track {
-  column-gap: 12px;
-  row-gap: 12px;
-  border-bottom: 1px solid #000;
-  justify-content: flex-start;
-  align-items: center;
-  width: 100%;
-  padding-bottom: 12px;
-  font-size: 24px;
-  line-height: 28px;
-  display: flex;
-  line-break:strict;
+    display: grid;
+    grid-template-columns: 40px 1fr 60px;
+    align-items: center;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    font-size: 24px;
+    line-height: 1.4;
+}
+
+.track .meta.number {
+    font-size: 12px;
+    opacity: 0.5;
+    min-width: 40px;
+}
+
+.track > .meta.number:last-child {
+    text-align: right;
+    font-size: 13px;
+    opacity: 0.5;
+}
+
+.project-meta-wrapper {
+    gap: 12px;
+    opacity: 0.8;
 }
 
 .track-title {
@@ -698,39 +730,7 @@
 }
 
 @media screen and (max-width: 479px) {
-  .window.music {
-    margin-top: -64px;
-    gap: 20px;
-  }
-
-  .window.music > main,
-  .window.music > section {
-    gap: 24px;
-  }
-
   /* --- HERO BLOCK --- */
-
-  .music-hero {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .project-cover {
-    width: 72vw;
-  }
-
-  .window.music h1 {
-    font-size: 32px;
-    line-height: 1.1;
-    margin-top: 8px;
-  }
-
-  .window.music .meta {
-    font-size: 14px;
-    line-height: 1.4;
-    opacity: 0.75;
-  }
 
   /* --- STREAM / DOWNLOAD BUTTONS --- */
 
