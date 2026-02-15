@@ -156,7 +156,7 @@ const musicSchema = {
   "@context": "https://schema.org",
   "@type": "MusicAlbum",
   "name": project.title,
-  "url": `https://tstfie.ch/${project.slug?.current ?? ""}`,
+  "url": `https://tstfie.ch/music/${project.slug?.current ?? ""}`,
   "datePublished": project.releaseDate,
   "byArtist": { "@type": "Person", "name": "Niklay Wiborny" },
   "numTracks": project.tracklists?.[0]?.tracks?.length ?? 0,
@@ -175,7 +175,7 @@ const musicSchema = {
 <Head
   title={`${project.title}`}
   description={`${project.type} by Niklay — ${formatDate(project.releaseDate)}`}
-  canonical={`https://tstfie.ch/${project.slug?.current}`}
+  canonical={`https://tstfie.ch/music/${project.slug?.current}`}
 />
 
 <script
