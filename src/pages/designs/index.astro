@@ -1,9 +1,12 @@
 ---
 export const prerender = true;
 
-import "../../styles/base.css"
-import "../../styles/global.css"
-import "../../styles/normalise.css"
+import "@styles/base.css"
+import "@styles/core.css"
+import "@styles/structural.css"
+import "@styles/typography.css"
+import "@styles/components.css"
+import "@styles/normalise.css"
 
 import Head from '../../layouts/head.astro';
 import Footer from '../../layouts/footer.astro';
@@ -12,7 +15,7 @@ import Header from '../../layouts/header.astro';
 
 <html lang="en">
 <Head
-    title="tstfie"
+    title="tstfie | Designs"
     description="Sneaker designs by Niklay"
     canonical="https://www.tstfie.ch/designs/"
 />

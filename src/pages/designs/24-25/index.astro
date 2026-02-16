@@ -1,9 +1,12 @@
 ---
 export const prerender = true;
 
-import "../../../styles/base.css"
-import "../../../styles/global.css"
-import "../../../styles/normalise.css"
+import "@styles/base.css"
+import "@styles/core.css"
+import "@styles/structural.css"
+import "@styles/typography.css"
+import "@styles/components.css"
+import "@styles/normalise.css"
 
 import Header from '../../../layouts/header.astro';
 import Head from '../../../layouts/head.astro';
@@ -19,7 +22,7 @@ const collections = await sanityClient.fetch(`
     title,
     releaseDate,
     slug,
-    length
+    lengthDisplay
   }
 `);
 
@@ -55,7 +58,9 @@ return `${month} ${day}${ordinal}, ${year}`;
       <p>As an archive of the "Hiatus" phase, the 24-25 cycle compiles a continuation of the narrative presented in the previous cycle. Its initiation followed release of the SAINT PABLO collection, allowing room for two months of silence before welcoming its central project, T.W.I.Y. Waves.</p>
       <div class="tracklist">
         <div class="audit-log">
-            {collections.map((collection: { slug: { current: any; }; title: unknown; releaseDate: string; length: unknown; }) => (
+            {collections.map((collection: {
+[x: string]: unknown; slug: { current: any; }; title: unknown; releaseDate: string; length: unknown; 
+}) => (
                 <div class="audit-log-entry">
                     <div class="log-entry-preview">
                         <div>
@@ -64,7 +69,7 @@ return `${month} ${day}${ordinal}, ${year}`;
                     </div>
                     <div class="log-entry-content">
                         <div class="meta number">
-                            {formatDate(collection.releaseDate)} · {collection.length}
+                            {formatDate(collection.releaseDate)} · {collection.lengthDisplay}
                         </div>
                     </div>
                 </div>

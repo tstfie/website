@@ -1,7 +1,12 @@
 ---
-import "../styles/base.css"
-import "../styles/global.css"
-import "../styles/normalise.css"
+import "@styles/base.css"
+import "@styles/core.css"
+import "@styles/structural.css"
+import "@styles/typography.css"
+import "@styles/components.css"
+import "@styles/forms.css"
+import "@styles/utilities.css"
+import "@styles/normalise.css"
 
 import Header from '../layouts/header.astro';
 import Head from '../layouts/head.astro';
@@ -20,7 +25,7 @@ import Footer from '../layouts/footer.astro';
       <div class="projects-nav">
         <a href="/?projects=open" class="navigation view-projects">View projects</a>
         </div>
-      <a href="/" onclick="event.preventDefault(); history.back();" class="navigation">Back</a>
+      <a href="/" onclick="(e => { e.preventDefault(); history.back(); })(event)" class="navigation">Back</a>
     </Header>
     <section class="window contact">
         <h1>Contact</h1>
@@ -28,7 +33,7 @@ import Footer from '../layouts/footer.astro';
       <section class="contact-section">
         <h3><a href="mailto:info@tstfie.ch">info@tstfie.ch</a></h3>
         <div class="form-block">
-          <form id="contactForm" class="fields-wrapper form">
+          <form id="contactForm" class="fields-wrapper">
             <!-- Honeypot field (hidden from users) -->
             <input type="text" name="website" style="display:none">
 
@@ -81,9 +86,11 @@ import Footer from '../layouts/footer.astro';
   </container>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      const form = document.getElementById('contactForm');
-      const messageEl = document.getElementById('formMessage');
-      const button = form.querySelector('button[type="submit"]');
+      const form = document.getElementById('contactForm') as HTMLFormElement | null;
+      const messageEl = document.getElementById('formMessage') as HTMLParagraphElement | null;
+      const button = form?.querySelector('button[type="submit"]') as HTMLButtonElement | null;
+
+      if (!form || !messageEl || !button) return;
 
       form.addEventListener('submit', async (e) => {
         e.preventDefault();

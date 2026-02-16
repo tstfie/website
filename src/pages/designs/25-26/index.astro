@@ -1,9 +1,12 @@
 ---
 export const prerender = true;
 
-import "../../../styles/base.css"
-import "../../../styles/global.css"
-import "../../../styles/normalise.css"
+import "@styles/base.css"
+import "@styles/core.css"
+import "@styles/structural.css"
+import "@styles/typography.css"
+import "@styles/components.css"
+import "@styles/normalise.css"
 
 import Header from '../../../layouts/header.astro';
 import Head from '../../../layouts/head.astro';
@@ -18,7 +21,7 @@ const collections = await sanityClient.fetch(`
     title,
     releaseDate,
     slug,
-    length
+    lengthDisplay
   }
 `);
 
@@ -54,7 +57,9 @@ return `${month} ${day}${ordinal}, ${year}`;
       <p>Beginning with Periapsis, the 25-26 cycle was established during the release-cycle of its first project. Both coincided with a structural shift of the website, following the "Apogee" period in May and June 2025.</p>
       <div class="tracklist">
         <div class="audit-log">
-            {collections.map((collection: { slug: { current: any; }; title: unknown; releaseDate: string; length: unknown; }) => (
+            {collections.map((collection: {
+lengthDisplay: unknown; slug: { current: any; }; title: unknown; releaseDate: string; length: unknown; 
+}) => (
                 <div class="audit-log-entry">
                     <div class="log-entry-preview">
                         <div>
@@ -63,7 +68,7 @@ return `${month} ${day}${ordinal}, ${year}`;
                     </div>
                     <div class="log-entry-content">
                         <div class="meta number">
-                            {formatDate(collection.releaseDate)} · {collection.length}
+                            {formatDate(collection.releaseDate)} · {collection.lengthDisplay}
                         </div>
                     </div>
                 </div>

@@ -1,7 +1,10 @@
 ---
-import "../styles/base.css"
-import "../styles/global.css"
-import "../styles/normalise.css"
+import "@styles/base.css"
+import "@styles/core.css"
+import "@styles/structural.css"
+import "@styles/typography.css"
+import "@styles/components.css"
+import "@styles/normalise.css"
 import { sanityClient } from "sanity:client";
 
 import Head from '../layouts/head.astro';
@@ -19,7 +22,7 @@ const latestUrl = `${urlPrefix}${latestProject.slug}`;
 ---
 <html lang="en">
 <Head
-  title="Not Found",
+  title="tstfie | Not Found",
   description="The requested page could not be found.",
   canonical="https://www.tstfie.ch/404"
 />
@@ -31,7 +34,7 @@ const latestUrl = `${urlPrefix}${latestProject.slug}`;
             <h1>404</h1>
           </section>
           <section>
-            <p>Nothing has been placed at this location.<br><span class="asterisk">Review the URL or retrace starting from index</span></p>
+            <p>Nothing has been placed at this location.<br><span class="asterisk">Review the URL or retrace starting from index.</span></p>
             <div class="interaction-wrapper">
               <p><a href={latestUrl} class="link">Latest project</a></p>
               <p><a href="/" class="link">Home</a></p>

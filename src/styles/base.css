@@ -38,8 +38,7 @@ div {
 
 
 /*//
-   Headings
-   former `.h1`–`.h6` values from Webflow //*/
+   Headings //*/
 
 h1 {
   margin: 0;
@@ -78,8 +77,7 @@ h5 {
 
 
 /*//
-   Text elements
-   Former `.paragraph` goes here //*/
+   Text elements //*/
 
 p {
   margin: 0;
@@ -110,7 +108,7 @@ nav {
 }
 
 /*//
-   Links//*/
+   Links //*/
 
 a {
   color: #262626;
@@ -130,7 +128,7 @@ a:active {
 
 
 /*//
-   Lists//*/
+   Lists //*/
 
 ul,
 ol {

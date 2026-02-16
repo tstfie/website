@@ -3,9 +3,12 @@ import Head from '../../layouts/head.astro';
 import Header from '../../layouts/header.astro';
 import Footer from '../../layouts/footer.astro';
 
-import '../../styles/global.css';
-import '../../styles/base.css';
-import '../../styles/normalise.css';
+import "@styles/base.css"
+import "@styles/core.css"
+import "@styles/structural.css"
+import "@styles/typography.css"
+import "@styles/components.css"
+import "@styles/normalise.css"
 
 const code = Astro.url.searchParams.get("code");
 
@@ -39,7 +42,7 @@ const message = messages[code ?? ""] ?? "Something went wrong.";
         <p>Receive updates</p>
       <section class="contact-section">
         <h3>Something went wrong.</h3>
-        <p>{message}</p>
+        <p>{message} Please try again.</p>
         <a href="/signup" class="cta primary"><h4>Try again</h4></a>
       </section>
     <div>
