@@ -1,4 +1,6 @@
 ---
+export const prerender = true;
+
 import Head from '../../layouts/head.astro';
 import Header from '../../layouts/header.astro';
 import Footer from '../../layouts/footer.astro';
@@ -39,11 +41,11 @@ import "@styles/utilities.css"
             <div class="div-block">
               <div>
                 <label for="first-name"><h5>first name<span class="asterisk">*</span></h5></label>
-                <input class="input-field" maxlength="256" name="First-Name" data-name="First Name" type="text" id="first-name" required="">
+                <input class="input-field" maxlength="256" name="firstName" data-name="First Name" type="text" id="first-name" required="">
               </div>
               <div>
                 <label for="last-name"><h5>last name</h5></label>
-                <input class="input-field" maxlength="256" name="Last-Name" data-name="Last Name" id="last-name" type="text">
+                <input class="input-field" maxlength="256" name="lastName" data-name="Last Name" id="last-name" type="text">
               </div>
             </div>
             <div>
@@ -77,18 +79,28 @@ import "@styles/utilities.css"
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
 
-      const res = await fetch("/api/signup", {
-        method: "POST",
-        body: new FormData(form),
-      });
+      try {
+        const res = await fetch("/api/signup", {
+          method: "POST",
+          body: new FormData(form),
+        });
 
-      if (!res.ok) {
-        const { error } = await res.json();
-        window.location.href = `/signup/error?code=${error}`;
-        return;
+        if (!res.ok) {
+          let errorCode = 'server_error';
+          try {
+            const body = await res.json();
+            errorCode = body?.error || errorCode;
+          } catch (err) {
+            // non-JSON / empty response
+          }
+          window.location.href = `/signup/error?code=${encodeURIComponent(errorCode)}`;
+          return;
+        }
+
+        window.location.href = "/signup/confirm";
+      } catch (err) {
+        window.location.href = "/signup/error?code=network_error";
       }
-
-      window.location.href = "/signup/confirm";
     });
   </script>
 </body>

@@ -98,6 +98,13 @@ export const POST: APIRoute = async ({ request }) => {
     /* ================================
        Brevo request
     ================================= */
+
+    // Ensure API key is available (fail fast with a clear error)
+    if (!import.meta.env.BREVO_API_KEY) {
+      console.error("BREVO_API_KEY is not set (signup)");
+      return jsonError("brevo_key_missing", 500);
+    }
+
     const brevoRes = await fetch(
       "https://api.brevo.com/v3/contacts/doubleOptinConfirmation",
       {

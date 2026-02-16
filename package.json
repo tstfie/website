@@ -1,13 +1,14 @@
 {
-  "name": "astro",
+  "name": "@tstfie/main",
   "type": "module",
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
-    "prebuild": "tsx src/scripts/generate-redirects.ts",
     "build": "astro build",
+    "postbuild": "node ./scripts/verify-server-entry.cjs",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "generate-redirects": "node --import tsx ./src/scripts/generate-redirects.ts"
   },
   "dependencies": {
     "@astrojs/react": "^4.4.2",
@@ -34,6 +35,6 @@
     "styled-components": "^6.1.19"
   },
   "devDependencies": {
-    "@astrojs/vercel": "^9.0.2"
+    "@astrojs/vercel": "^9.0.4"
   }
 }
